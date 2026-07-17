@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Checklist } from "@/components/journeys/checklist";
 import { ProgressBar } from "@/components/journeys/progress-bar";
+import { Chat } from "@/components/journeys/chat";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, FileText, MessageCircle } from "lucide-react";
+import { CheckCircle2, Clock, FileText } from "lucide-react";
 
 interface JourneyData {
   id: string;
@@ -249,25 +250,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                 )}
 
               {activeTab === "chat" && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MessageCircle className="h-5 w-5" />
-                      Especialista em {journey.title}
-                    </CardTitle>
-                    <CardDescription>
-                      Converse com nossa IA especialista
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="rounded-lg bg-slate-100 p-6 text-center dark:bg-slate-800">
-                      <p className="text-slate-600 dark:text-slate-400">
-                        Chat com especialista IA será ativado em breve.
-                      </p>
-                      <Button className="mt-4">Contatar Suporte</Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Chat journeyId={journey.id} journeyTitle={journey.title} />
               )}
             </div>
 
