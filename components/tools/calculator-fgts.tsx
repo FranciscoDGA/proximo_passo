@@ -165,7 +165,7 @@ Gerado em: ${new Date().toLocaleDateString('pt-BR')}`;
         </Button>
 
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          💡 Consulte sempre o site da Caixa Econômica (caixa.gov.br) e o App "Caixa Trabalhador" para saldo e opções atualizadas.
+          💡 Consulte sempre o site da Caixa Econômica (caixa.gov.br) e o App &quot;Caixa Trabalhador&quot; para saldo e opções atualizadas.
         </p>
       </CardContent>
     </Card>

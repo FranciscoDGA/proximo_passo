@@ -89,7 +89,7 @@ Categoria: ${category.toUpperCase()}
 Data: ${new Date().toLocaleDateString('pt-BR')}
 
 DOCUMENTOS NECESSÁRIOS:
-${byCategory.map((doc, idx) => {
+${byCategory.map((doc) => {
   const found = documentList.find((d) => d.name === doc);
   const status = found?.status || 'pendente';
   const mark = status === 'pendente' ? '☐' : status === 'obtido' ? '☑' : '✓';
