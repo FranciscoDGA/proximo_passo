@@ -174,7 +174,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
           <div className="container-safe grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
               {activeTab === "checklist" && (
-                <Checklist items={checklist} journeySlug={journey.slug} />
+                <Checklist items={checklist} journeySlug={journey.slug} journeyId={journey.id} />
               )}
 
               {activeTab === "timeline" &&

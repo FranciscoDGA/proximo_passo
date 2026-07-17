@@ -1,12 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Menu, X, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/providers/auth-provider";
+import { signOut } from "@/lib/auth";
 
 export function Navbar() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      await signOut();
+      router.push("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      setIsSigningOut(false);
+    }
+  };
 
   return (
     <nav className="border-b border-slate-200 dark:border-slate-800">
@@ -44,12 +66,34 @@ export function Navbar() {
               Preços
             </Link>
             <div className="flex gap-2 pt-4 md:pt-0">
-              <Button variant="ghost" asChild>
-                <Link href="/signin">Entrar</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/signup">Começar</Link>
-              </Button>
+              {isMounted && !isLoading && user ? (
+                <>
+                  <Button variant="ghost" asChild>
+                    <Link href="/dashboard">
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleSignOut}
+                    disabled={isSigningOut}
+                    className="gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Sair
+                  </Button>
+                </>
+              ) : isMounted && !isLoading ? (
+                <>
+                  <Button variant="ghost" asChild>
+                    <Link href="/signin">Entrar</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/signup">Começar</Link>
+                  </Button>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
