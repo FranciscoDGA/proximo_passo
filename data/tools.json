@@ -1,0 +1,42 @@
+[
+  {
+    "id": "calculadora-mei",
+    "slug": "calculadora-mei",
+    "title": "Calculadora MEI",
+    "description": "Calcule seus impostos e guia de recolhimento",
+    "category": "profissional",
+    "type": "calculator"
+  },
+  {
+    "id": "calculadora-financiamento",
+    "slug": "calculadora-financiamento",
+    "title": "Calculadora de Financiamento",
+    "description": "Simule seu financiamento imobiliário",
+    "category": "propriedade",
+    "type": "calculator"
+  },
+  {
+    "id": "checklist-casamento",
+    "slug": "checklist-casamento",
+    "title": "Checklist de Casamento",
+    "description": "Lista completa de tudo para se casar",
+    "category": "familia",
+    "type": "checklist"
+  },
+  {
+    "id": "organizador-documentos",
+    "slug": "organizador-documentos",
+    "title": "Organizador de Documentos",
+    "description": "Organize e armazene seus documentos importantes",
+    "category": "documentos",
+    "type": "organizer"
+  },
+  {
+    "id": "simulador-aposentadoria",
+    "slug": "simulador-aposentadoria",
+    "title": "Simulador de Aposentadoria",
+    "description": "Simule quando você pode se aposentar",
+    "category": "financeiro",
+    "type": "calculator"
+  }
+]

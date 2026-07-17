@@ -1,0 +1,98 @@
+[
+  {
+    "id": "abrir-mei",
+    "slug": "abrir-mei",
+    "title": "Abrir MEI",
+    "description": "Guia completo para formalizar seu trabalho como Microempreendedor Individual",
+    "category": "profissional",
+    "stepsCount": 8,
+    "estimatedTime": "7 dias",
+    "icon": "briefcase",
+    "steps": [
+      {
+        "id": 1,
+        "title": "Reunir documentação",
+        "description": "Prepare CPF, RG, comprovante de endereço e dados da atividade"
+      },
+      {
+        "id": 2,
+        "title": "Acessar Portal MEI",
+        "description": "Acesse www.gov.br/meu-negocio-mei"
+      },
+      {
+        "id": 3,
+        "title": "Preencher formulário",
+        "description": "Preencha informações pessoais e da atividade"
+      },
+      {
+        "id": 4,
+        "title": "Validar dados",
+        "description": "Revise todos os dados preenchidos"
+      },
+      {
+        "id": 5,
+        "title": "Formalizar MEI",
+        "description": "Finalize a formalização no portal"
+      },
+      {
+        "id": 6,
+        "title": "Registrar na prefeitura",
+        "description": "Registre seu MEI na prefeitura local"
+      },
+      {
+        "id": 7,
+        "title": "Registrar na junta comercial",
+        "description": "Faça o registro na junta comercial"
+      },
+      {
+        "id": 8,
+        "title": "Abrir conta bancária",
+        "description": "Abra conta bancária para negócios"
+      }
+    ]
+  },
+  {
+    "id": "comprar-casa",
+    "slug": "comprar-casa",
+    "title": "Comprar Casa",
+    "description": "Passo a passo para comprar seu primeiro imóvel",
+    "category": "propriedade",
+    "stepsCount": 15,
+    "estimatedTime": "3-6 meses",
+    "icon": "home",
+    "steps": []
+  },
+  {
+    "id": "inventario",
+    "slug": "inventario",
+    "title": "Inventário",
+    "description": "Guia completo para resolver inventário de herança",
+    "category": "familia",
+    "stepsCount": 18,
+    "estimatedTime": "6-12 meses",
+    "icon": "scale",
+    "steps": []
+  },
+  {
+    "id": "casar",
+    "slug": "casar",
+    "title": "Casar",
+    "description": "Tudo o que você precisa saber para se casar legalmente",
+    "category": "familia",
+    "stepsCount": 12,
+    "estimatedTime": "2-3 meses",
+    "icon": "heart",
+    "steps": []
+  },
+  {
+    "id": "declarar-ir",
+    "slug": "declarar-ir",
+    "title": "Declarar Imposto de Renda",
+    "description": "Guia para declarar seus impostos com segurança",
+    "category": "financeiro",
+    "stepsCount": 10,
+    "estimatedTime": "2-3 horas",
+    "icon": "file-text",
+    "steps": []
+  }
+]
