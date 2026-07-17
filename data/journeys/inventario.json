@@ -1,0 +1,43 @@
+{
+  "id": "inventario",
+  "slug": "inventario",
+  "title": "Inventário e Sucessão",
+  "description": "Guia completo para resolver inventário de herança de forma organizada",
+  "category": "familia",
+  "stepsCount": 18,
+  "estimatedTime": "6-12 meses",
+  "sections": {
+    "overview": {
+      "description": "Quando alguém falece, seus bens precisam ser inventariados e distribuídos entre herdeiros. Este guia orienta todo o processo legal."
+    },
+    "checklist": [
+      { "id": 1, "title": "Registrar óbito no cartório", "description": "Certidão de óbito official" },
+      { "id": 2, "title": "Localizar testamento (se houver)", "description": "Procurar entre documentos pessoais" },
+      { "id": 3, "title": "Listar todos os bens do falecido", "description": "Imóveis, veículos, contas bancárias, aplicações" },
+      { "id": 4, "title": "Reunir documentação", "description": "Certidões, comprovantes de propriedade, extratos" },
+      { "id": 5, "title": "Contratar advogado de família", "description": "Orientação jurídica é essencial" },
+      { "id": 6, "title": "Abrir processo de inventário", "description": "No tribunal com ajuda do advogado" },
+      { "id": 7, "title": "Notificar todos os herdeiros", "description": "Informar sobre direitos e deveres" },
+      { "id": 8, "title": "Avaliar bens (laudo técnico)", "description": "Profissional avalia valor de cada bem" },
+      { "id": 9, "title": "Listar dívidas e débitos", "description": "Impostos atrasados, empréstimos, IPTU" },
+      { "id": 10, "title": "Pagar impostos e dívidas", "description": "Usa-se a herança para pagar obrigações" },
+      { "id": 11, "title": "Dividir patrimônio entre herdeiros", "description": "Segundo testamento ou lei de sucessão" },
+      { "id": 12, "title": "Transferir contas bancárias", "description": "Novas contas ou posse dos herdeiros" },
+      { "id": 13, "title": "Transferir imóveis (se houver)", "description": "Novos registros cartoriais para herdeiros" },
+      { "id": 14, "title": "Transferir veículos", "description": "Documentação no DETRAN" },
+      { "id": 15, "title": "Encerrar contas de utilidade", "description": "Água, luz, gás, internet do falecido" },
+      { "id": 16, "title": "Encerrar assinaturas e serviços", "description": "Cancelar planos de saúde, seguros, etc" },
+      { "id": 17, "title": "Apresentar autos ao tribunal", "description": "Documentos finais do inventário" },
+      { "id": 18, "title": "Obter sentença final", "description": "Tribunal aprova distribuição" }
+    ],
+    "costs": {
+      "items": [
+        { "item": "Certidão de óbito", "cost": "R$ 50-200" },
+        { "item": "Advogado de família (1-3% patrimônio)", "cost": "R$ 1.000-50.000" },
+        { "item": "Custas processuais", "cost": "R$ 2.000-5.000" },
+        { "item": "ITCD (imposto sucessório)", "cost": "Varia por estado" },
+        { "item": "Avaliação de bens", "cost": "R$ 1.000-3.000" }
+      ]
+    }
+  }
+}

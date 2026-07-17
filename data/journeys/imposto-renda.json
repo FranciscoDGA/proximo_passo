@@ -1,0 +1,33 @@
+{
+  "id": "imposto-renda",
+  "slug": "imposto-renda",
+  "title": "Declarar Imposto de Renda",
+  "description": "Guia passo a passo para declarar seus impostos com segurança",
+  "category": "financeiro",
+  "stepsCount": 10,
+  "estimatedTime": "2-3 horas",
+  "sections": {
+    "overview": {
+      "description": "Declarar IR é obrigatório para quem ganha acima de um piso. Este guia torna o processo simples e seguro."
+    },
+    "checklist": [
+      { "id": 1, "title": "Verificar se precisa declarar", "description": "Renda > R$ 30.639 em 2024" },
+      { "id": 2, "title": "Reunir todos os recibos", "description": "Holerite, comprovantes de ganhos extras" },
+      { "id": 3, "title": "Separar despesas dedutíveis", "description": "Saúde, educação, contribuição sindical" },
+      { "id": 4, "title": "Compilar ganhos de outros investimentos", "description": "Rendimentos de poupança, ações, aluguel" },
+      { "id": 5, "title": "Baixar programa IRPF", "description": "No site da Receita Federal" },
+      { "id": 6, "title": "Preencher dados pessoais", "description": "Nome, CPF, endereço" },
+      { "id": 7, "title": "Incluir renda de todas as fontes", "description": "Emprego, freelance, investimentos" },
+      { "id": 8, "title": "Incluir deduções", "description": "Saúde, educação, previdência" },
+      { "id": 9, "title": "Revisar e validar dados", "description": "Conferir se está tudo correto" },
+      { "id": 10, "title": "Transmitir declaração", "description": "Enviar para Receita Federal" }
+    ],
+    "costs": {
+      "items": [
+        { "item": "Imposto de Renda (variável)", "cost": "Pode ser crédito ou débito" },
+        { "item": "Declaração via CAC (grátis)", "cost": "R$ 0" },
+        { "item": "Consultor contábil (opcional)", "cost": "R$ 200-500" }
+      ]
+    }
+  }
+}
