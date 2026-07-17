@@ -30,12 +30,114 @@
       { "id": 17, "title": "Apresentar autos ao tribunal", "description": "Documentos finais do inventário" },
       { "id": 18, "title": "Obter sentença final", "description": "Tribunal aprova distribuição" }
     ],
+    "timeline": [
+      {
+        "day": "1-14",
+        "title": "Registro de Óbito e Documentação Inicial",
+        "tasks": [
+          "Registre o óbito no cartório (24-48 horas após morte)",
+          "Obtenha certidão de óbito original e cópias",
+          "Procure por testamento entre documentos pessoais",
+          "Comunique o falecimento ao banco para bloquear contas"
+        ]
+      },
+      {
+        "day": "15-30",
+        "title": "Contratação de Profissionais e Listagem de Bens",
+        "tasks": [
+          "Contrate advogado especializado em direito de família",
+          "Liste todos os bens do falecido (imóveis, veículos, contas)",
+          "Reúna documentos de propriedade (escrituras, CRV, extratos)",
+          "Identifique todas as dívidas e débitos pendentes"
+        ]
+      },
+      {
+        "day": "30-60",
+        "title": "Abertura do Processo e Notificação",
+        "tasks": [
+          "Abra processo de inventário com o advogado",
+          "Notifique todos os herdeiros oficialmente",
+          "Contrate avaliador profissional para bens",
+          "Providencie laudo técnico de avaliação"
+        ]
+      },
+      {
+        "day": "60-150",
+        "title": "Divisão e Transferência de Bens",
+        "tasks": [
+          "Divida patrimônio conforme testamento ou lei",
+          "Transfira contas bancárias para herdeiros",
+          "Faça novos registros cartoriais para imóveis",
+          "Atualize documentação de veículos no DETRAN"
+        ]
+      },
+      {
+        "day": "150-240",
+        "title": "Finalização e Sentença",
+        "tasks": [
+          "Apresente autos finais ao tribunal",
+          "Encerre contas e serviços do falecido",
+          "Aguarde julgamento e sentença final",
+          "Obtenha cópia da sentença para registro"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "name": "Certidão de Óbito",
+        "description": "Documento oficial do cartório registrando a morte",
+        "url": "#"
+      },
+      {
+        "name": "Testamento (se houver)",
+        "description": "Documento com disposições finais do falecido",
+        "url": "#"
+      },
+      {
+        "name": "Documentação de Propriedade",
+        "description": "Escrituras, CRV de veículos, extratos bancários, certificados de investimento",
+        "url": "#"
+      },
+      {
+        "name": "Laudo de Avaliação de Bens",
+        "description": "Avaliação profissional de imóveis e outros bens",
+        "url": "#"
+      },
+      {
+        "name": "Petição Inicial de Inventário",
+        "description": "Formulário legal para abrir processo de inventário no tribunal",
+        "url": "#"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Qual é o prazo para abrir o inventário?",
+        "a": "Deve ser aberto em até 60 dias após o óbito. Deixar passar esse prazo resulta em multa. Se houver testador, o prazo é até 30 dias após o testamento ser aberto."
+      },
+      {
+        "q": "Quem pode ser herdeiro?",
+        "a": "Herdeiros legais: cônjuge, filhos, pais, irmãos (nessa ordem). Se houver testamento válido, a distribuição segue suas disposições. Pessoas nomeadas no testamento também herdam."
+      },
+      {
+        "q": "Preciso contratar um advogado?",
+        "a": "Tecnicamente, pode fazer através do e-PROC do tribunal. Porém, recomenda-se fortemente contratar um advogado especialista para evitar erros processuais caros."
+      },
+      {
+        "q": "Quanto custa todo o processo?",
+        "a": "Varia muito pelo tamanho do patrimônio e complexidade. Advogado custa 1-3% do patrimônio. Custas processuais variam de R$ 2-5 mil. Impostos (ITCD) variam por estado."
+      },
+      {
+        "q": "Os herdeiros precisam pagar as dívidas do falecido?",
+        "a": "Sim. As dívidas (empréstimos, IPTU atrasado, etc) são pagas com os bens do espólio antes de distribuir a herança. Se insuficiente, herdeiros não pagam do bolso."
+      }
+    ],
     "costs": {
+      "description": "Custos variam significativamente de acordo com o tamanho do patrimônio e complexidade do caso",
       "items": [
         { "item": "Certidão de óbito", "cost": "R$ 50-200" },
         { "item": "Advogado de família (1-3% patrimônio)", "cost": "R$ 1.000-50.000" },
         { "item": "Custas processuais", "cost": "R$ 2.000-5.000" },
-        { "item": "ITCD (imposto sucessório)", "cost": "Varia por estado" },
+        { "item": "ITCD (imposto sucessório)", "cost": "Varia por estado (0-8%)" },
         { "item": "Avaliação de bens", "cost": "R$ 1.000-3.000" }
       ]
     }

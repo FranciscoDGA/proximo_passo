@@ -24,12 +24,113 @@
       { "id": 11, "title": "Revisar seguros", "description": "Atualizar beneficiário se necessário" },
       { "id": 12, "title": "Organizar recepção (opcional)", "description": "Festinha com família e amigos" }
     ],
+    "timeline": [
+      {
+        "day": "1-7",
+        "title": "Preparação Documental",
+        "tasks": [
+          "Reúna RG, CPF e comprovante de estado civil",
+          "Solicit certidão de antecedentes criminais",
+          "Converse sobre regime de bens com cônjuge",
+          "Faça fotocópias autenticadas dos documentos"
+        ]
+      },
+      {
+        "day": "7-14",
+        "title": "Agendamento e Testemunhas",
+        "tasks": [
+          "Procure cartório próximo e verifique horários",
+          "Agende data da celebração civil",
+          "Converse com duas testemunhas (maiores de 18 anos)",
+          "Confirme comparecer com ambos os noivos"
+        ]
+      },
+      {
+        "day": "15-30",
+        "title": "Cerimônia Civil",
+        "tasks": [
+          "Compareça no cartório na data agendada",
+          "Leve todos os documentos necessários",
+          "Leve as duas testemunhas",
+          "Receba certidão de casamento original"
+        ]
+      },
+      {
+        "day": "30-60",
+        "title": "Atualização de Documentos",
+        "tasks": [
+          "Agende comparecimento na Polícia Federal para novo RG",
+          "Atualize CPF com nome novo (se aplicável)",
+          "Renove carteira de motorista (DETRAN)",
+          "Notifique empregador sobre mudança de estado civil"
+        ]
+      },
+      {
+        "day": "60-90",
+        "title": "Beneficiários e Seguros",
+        "tasks": [
+          "Atualize plano de saúde com cônjuge como dependente",
+          "Revise beneficiários em apólices de seguro",
+          "Comunique mudança de estado civil a contas bancárias",
+          "Atualize plano de previdência privada"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "name": "Requerimento de Habilitação",
+        "description": "Formulário oficial para solicitar casamento no cartório",
+        "url": "#"
+      },
+      {
+        "name": "Declaração de Regime de Bens",
+        "description": "Documento comprovando o tipo de regime escolhido (comunhão, separação ou participação)",
+        "url": "#"
+      },
+      {
+        "name": "Certidão de Antecedentes",
+        "description": "Documento comprovando não ter antecedentes criminais",
+        "url": "#"
+      },
+      {
+        "name": "Comprovante de Estado Civil",
+        "description": "Certidão de solteirice obtida no cartório",
+        "url": "#"
+      },
+      {
+        "name": "Modelo de Contrato Pré-nupcial",
+        "description": "Contrato opcional para acordos financeiros antes do casamento",
+        "url": "#"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Posso casar no mesmo dia do agendamento?",
+        "a": "Não. É necessário fazer o agendamento com antecedência. A maioria dos cartórios permite agendamento com 15 a 30 dias de antecedência. Algumas localidades podem exigir mais tempo."
+      },
+      {
+        "q": "Qual regime de bens é melhor?",
+        "a": "Depende da sua situação financeira. Comunhão total: tudo é compartilhado. Separação: cada um mantém seus bens. Participação final: híbrido. Consulte um advogado para sua situação específica."
+      },
+      {
+        "q": "As testemunhas precisam ser da família?",
+        "a": "Não. As testemunhas podem ser qualquer pessoa maior de 18 anos, não precisam de relação com os noivos. Alguns cartórios colocam testemunhas à disposição se necessário."
+      },
+      {
+        "q": "Preciso mudar de nome obrigatoriamente?",
+        "a": "Não. A mudança de nome após casamento é opcional. Ambos os cônjuges podem optar por adotar o sobrenome do outro, ou manter seus nomes originais."
+      },
+      {
+        "q": "Quanto custa uma recepção de casamento?",
+        "a": "O custo varia bastante: desde um simples chá com familiares (R$ 500-1.000) até grandes eventos (R$ 50.000+). Você tem liberdade total para decidir o que cabe no seu orçamento."
+      }
+    ],
     "costs": {
       "items": [
         { "item": "Taxa de casamento civil", "cost": "R$ 200-500" },
         { "item": "Certidões e documentos", "cost": "R$ 100-300" },
         { "item": "Alteração de documentos", "cost": "R$ 0-200" },
-        { "item": "Recepção (opcional)", "cost": "Variável" }
+        { "item": "Recepção (opcional)", "cost": "Variável (R$ 500-50.000+)" }
       ]
     }
   }
