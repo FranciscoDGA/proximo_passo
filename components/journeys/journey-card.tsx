@@ -21,7 +21,6 @@ export function JourneyCard({
   slug,
   title,
   description,
-  category,
   stepsCount,
   estimatedTime,
 }: JourneyCardProps) {
