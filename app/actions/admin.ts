@@ -102,3 +102,113 @@ export async function updateUserSubscription(
     return { success: false, error: 'Failed to update subscription' };
   }
 }
+
+// Journey Management
+export interface JourneyData {
+  id: string;
+  slug: string;
+  title: string;
+  description: string | null;
+  category: string;
+  steps_count: number;
+  estimated_time_hours: number | null;
+  published_at: string;
+}
+
+export async function getAdminJourneys(): Promise<JourneyData[]> {
+  if (!supabase) {
+    return [];
+  }
+
+  try {
+    const { data: journeys, error } = await supabase
+      .from('journeys')
+      .select('*')
+      .order('published_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching journeys:', error);
+      return [];
+    }
+
+    return journeys || [];
+  } catch (error) {
+    console.error('Error in getAdminJourneys:', error);
+    return [];
+  }
+}
+
+export async function createJourney(
+  data: Omit<JourneyData, 'id' | 'published_at'>
+): Promise<{ success: boolean; error?: string; journey?: JourneyData }> {
+  if (!supabase) {
+    return { success: false, error: 'Supabase not available' };
+  }
+
+  try {
+    const { data: journey, error } = await supabase
+      .from('journeys')
+      .insert([data])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating journey:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, journey };
+  } catch (error) {
+    console.error('Error in createJourney:', error);
+    return { success: false, error: 'Failed to create journey' };
+  }
+}
+
+export async function updateJourney(
+  journeyId: string,
+  data: Partial<JourneyData>
+): Promise<{ success: boolean; error?: string }> {
+  if (!supabase) {
+    return { success: false, error: 'Supabase not available' };
+  }
+
+  try {
+    const { error } = await supabase
+      .from('journeys')
+      .update(data)
+      .eq('id', journeyId);
+
+    if (error) {
+      console.error('Error updating journey:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error in updateJourney:', error);
+    return { success: false, error: 'Failed to update journey' };
+  }
+}
+
+export async function deleteJourney(journeyId: string): Promise<{ success: boolean; error?: string }> {
+  if (!supabase) {
+    return { success: false, error: 'Supabase not available' };
+  }
+
+  try {
+    const { error } = await supabase
+      .from('journeys')
+      .delete()
+      .eq('id', journeyId);
+
+    if (error) {
+      console.error('Error deleting journey:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error in deleteJourney:', error);
+    return { success: false, error: 'Failed to delete journey' };
+  }
+}
