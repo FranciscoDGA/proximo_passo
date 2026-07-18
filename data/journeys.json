@@ -1,0 +1,115 @@
+[
+  {
+    "id": "abrir-mei",
+    "slug": "abrir-mei",
+    "title": "Abrir MEI",
+    "description": "Guia completo para formalizar seu trabalho como Microempreendedor Individual.",
+    "type": "conquistar",
+    "category": "profissional",
+    "stepsCount": 8,
+    "estimatedTime": "7 dias",
+    "icon": "briefcase",
+    "steps": [
+      {
+        "id": 1,
+        "title": "Reunir documentação",
+        "description": "Prepare CPF, RG, comprovante de endereço e dados da atividade"
+      },
+      {
+        "id": 2,
+        "title": "Acessar Portal MEI",
+        "description": "Acesse www.gov.br/meu-negocio-mei"
+      },
+      {
+        "id": 3,
+        "title": "Preencher formulário",
+        "description": "Preencha informações pessoais e da atividade"
+      },
+      {
+        "id": 4,
+        "title": "Validar dados",
+        "description": "Revise todos os dados preenchidos"
+      },
+      {
+        "id": 5,
+        "title": "Formalizar MEI",
+        "description": "Finalize a formalização no portal"
+      },
+      {
+        "id": 6,
+        "title": "Registrar na prefeitura",
+        "description": "Registre seu MEI na prefeitura local"
+      },
+      {
+        "id": 7,
+        "title": "Registrar na junta comercial",
+        "description": "Faça o registro na junta comercial"
+      },
+      {
+        "id": 8,
+        "title": "Abrir conta bancária",
+        "description": "Abra conta bancária para negócios"
+      }
+    ]
+  },
+  {
+    "id": "comprar-casa",
+    "slug": "comprar-casa",
+    "title": "Comprar Casa",
+    "description": "Passo a passo para comprar seu primeiro imóvel com segurança.",
+    "type": "conquistar",
+    "category": "propriedade",
+    "stepsCount": 15,
+    "estimatedTime": "3-6 meses",
+    "icon": "home",
+    "steps": []
+  },
+  {
+    "id": "casar",
+    "slug": "casar",
+    "title": "Casar",
+    "description": "Tudo o que você precisa saber para se casar legalmente.",
+    "type": "conquistar",
+    "category": "familia",
+    "stepsCount": 12,
+    "estimatedTime": "2-3 meses",
+    "icon": "heart",
+    "steps": []
+  },
+  {
+    "id": "demissao",
+    "slug": "demissao",
+    "title": "Fui Demitido",
+    "description": "O que fazer logo após uma demissão: direitos, rescisão e próximos passos.",
+    "type": "resolver",
+    "category": "profissional",
+    "stepsCount": 10,
+    "estimatedTime": "15-30 dias",
+    "icon": "alert-circle",
+    "steps": []
+  },
+  {
+    "id": "inventario",
+    "slug": "inventario",
+    "title": "Inventário",
+    "description": "Guia completo para resolver inventário de herança familiar.",
+    "type": "resolver",
+    "category": "familia",
+    "stepsCount": 18,
+    "estimatedTime": "6-12 meses",
+    "icon": "scale",
+    "steps": []
+  },
+  {
+    "id": "dividas",
+    "slug": "dividas",
+    "title": "Sair das Dívidas",
+    "description": "Estratégia para renegociar dívidas e limpar seu nome.",
+    "type": "resolver",
+    "category": "financeiro",
+    "stepsCount": 12,
+    "estimatedTime": "1-6 meses",
+    "icon": "trending-down",
+    "steps": []
+  }
+]

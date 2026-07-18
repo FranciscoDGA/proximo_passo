@@ -1,0 +1,155 @@
+{
+  "id": "abrir-mei",
+  "slug": "abrir-mei",
+  "title": "Abrir MEI",
+  "description": "Guia completo para formalizar seu trabalho como Microempreendedor Individual",
+  "category": "profissional",
+  "stepsCount": 8,
+  "estimatedTime": "7 dias",
+  "icon": "briefcase",
+  "sections": {
+    "overview": {
+      "description": "MEI (Microempreendedor Individual) é a forma de formalização para quem trabalha por conta própria. Este guia vai te ajudar a navegar todo o processo em apenas 7 dias.",
+      "benefits": [
+        "Formalização automática",
+        "Acesso a benefícios sociais (INSS)",
+        "Emissão de recibos (RPA)",
+        "Possibilidade de contratar 1 funcionário",
+        "Acesso a crédito facilitado"
+      ]
+    },
+    "checklist": [
+      {
+        "id": 1,
+        "title": "Reunir documentação pessoal",
+        "description": "Prepare CPF, RG e comprovante de endereço. Você vai precisar desses dados para preenchimento.",
+        "documents": ["CPF", "RG", "Comprovante de Endereço (conta de água, energia, etc)"]
+      },
+      {
+        "id": 2,
+        "title": "Escolher a atividade principal",
+        "description": "Defina qual é sua principal atividade profissional. Por exemplo: Consultor, Desenvolvedor, Consultor de Tecnologia.",
+        "documents": ["Lista de Atividades CNAE"]
+      },
+      {
+        "id": 3,
+        "title": "Acessar Portal MEI oficial",
+        "description": "Acesse www.gov.br/meu-negocio-mei e clique em 'Solicitação de Formalização'",
+        "documents": ["Acesso ao gov.br com CPF e senha"]
+      },
+      {
+        "id": 4,
+        "title": "Preencher formulário de formalização",
+        "description": "Complete o formulário com dados pessoais, atividade principal e forma de tributação (escolha Simples Nacional).",
+        "documents": ["Formulário de Formalização RFB"]
+      },
+      {
+        "id": 5,
+        "title": "Validar dados no portal",
+        "description": "Revise cuidadosamente todos os dados preenchidos. Qualquer erro pode dificultar depois.",
+        "documents": ["Checklist de Validação"]
+      },
+      {
+        "id": 6,
+        "title": "Formalizar MEI oficialmente",
+        "description": "Clique em 'Enviar' para formalizar. Você receberá um número de inscrição na hora.",
+        "documents": ["Recibo de Formalização (CCMEI)"]
+      },
+      {
+        "id": 7,
+        "title": "Registrar na prefeitura local",
+        "description": "Vá até a prefeitura de sua cidade com o CCMEI para registrar sua licença de atividade.",
+        "documents": ["Alvará de Funcionamento"]
+      },
+      {
+        "id": 8,
+        "title": "Abrir conta bancária empresarial",
+        "description": "Com o número do MEI em mãos, vá a um banco abrir uma conta businessz para receber seus pagamentos.",
+        "documents": ["Conta Bancária Empresarial", "Comprovante de Regularização"]
+      }
+    ],
+    "timeline": [
+      {
+        "day": 1,
+        "title": "Preparação",
+        "tasks": ["Reunir documentos", "Pesquisar sobre MEI", "Acessar portal"]
+      },
+      {
+        "day": 2,
+        "title": "Formalização",
+        "tasks": ["Preencher formulário", "Validar dados", "Enviar solicitação"]
+      },
+      {
+        "day": 3,
+        "title": "Confirmação",
+        "tasks": ["Receber CCMEI", "Verificar status"]
+      },
+      {
+        "day": "4-5",
+        "title": "Registros Municipais",
+        "tasks": ["Ir à prefeitura", "Obter alvará", "Registrar atividade"]
+      },
+      {
+        "day": "6-7",
+        "title": "Conta Bancária",
+        "tasks": ["Visitar banco", "Abrir conta", "Configurar pagamentos"]
+      }
+    ],
+    "documents": [
+      {
+        "name": "Guia Oficial MEI",
+        "description": "Documento oficial da Receita Federal sobre MEI",
+        "url": "/docs/guia-mei.pdf"
+      },
+      {
+        "name": "Declaração Anual de Faturamento",
+        "description": "Modelo de declaração a ser preenchida anualmente",
+        "url": "/docs/darf-mei.xlsx"
+      },
+      {
+        "name": "Tabela de CNAE",
+        "description": "Classificação Nacional de Atividades Econômicas",
+        "url": "/docs/cnae-2024.pdf"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Qual é o custo para abrir um MEI?",
+        "a": "A formalização em si é gratuita. Você só paga DARF (guia de recolhimento) a partir do próximo mês, que é de R$ 64,07 (2024)."
+      },
+      {
+        "q": "Quanto tempo leva para ser formalizado?",
+        "a": "A formalização é imediata! Você recebe o CCMEI na hora ao finalizar no portal. Os registros municipais levam de 1-3 dias."
+      },
+      {
+        "q": "Qual a renda máxima como MEI?",
+        "a": "Você pode faturar até R$ 81.000 por ano (ou R$ 6.750/mês). Acima disso, precisa abrir uma empresa."
+      },
+      {
+        "q": "Posso mudar de atividade depois?",
+        "a": "Sim, você pode fazer alteração de atividade a qualquer momento acessando o portal."
+      }
+    ],
+    "costs": {
+      "description": "Custos associados à formalização e manutenção de um MEI",
+      "items": [
+        {
+          "item": "Formalização inicial",
+          "cost": "Grátis"
+        },
+        {
+          "item": "DARF mensal (imposto)",
+          "cost": "R$ 64,07"
+        },
+        {
+          "item": "Alvará municipal",
+          "cost": "Varia (geralmente gratuito)"
+        },
+        {
+          "item": "Conta bancária",
+          "cost": "Grátis em maioria dos bancos"
+        }
+      ]
+    }
+  }
+}

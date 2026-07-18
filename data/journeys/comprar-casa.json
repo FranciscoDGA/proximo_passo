@@ -1,0 +1,199 @@
+{
+  "id": "comprar-casa",
+  "slug": "comprar-casa",
+  "title": "Comprar Casa",
+  "description": "Guia completo para comprar seu primeiro imóvel com segurança",
+  "category": "propriedade",
+  "stepsCount": 15,
+  "estimatedTime": "3-6 meses",
+  "icon": "home",
+  "sections": {
+    "overview": {
+      "description": "Comprar uma casa é uma das maiores decisões da vida. Este guia vai orientá-lo através de cada etapa, desde a busca do imóvel até a escritura final.",
+      "benefits": [
+        "Checklist completo com 15 etapas",
+        "Calculadora de financiamento",
+        "Timeline com prazos críticos",
+        "Documentos necessários",
+        "Simulação de custos",
+        "Dicas de negociação"
+      ]
+    },
+    "checklist": [
+      {
+        "id": 1,
+        "title": "Definir orçamento e capacidade de financiamento",
+        "description": "Calcule quanto você pode gastar. Entrada + financiamento + custos adicionais"
+      },
+      {
+        "id": 2,
+        "title": "Pesquisar regiões e imóveis",
+        "description": "Explore Airbnb, Imobiliárias, OLX. Visite bairros no fim de semana"
+      },
+      {
+        "id": 3,
+        "title": "Pré-aprovação de crédito no banco",
+        "description": "Vá ao banco e obtenha pré-aprovação. Facilita negociação com vendedor"
+      },
+      {
+        "id": 4,
+        "title": "Visitar imóveis e negociar preço",
+        "description": "Visite várias opções. Leve engenheiro ou arquiteto amigo para avaliar"
+      },
+      {
+        "id": 5,
+        "title": "Fazer proposta de compra (Minuta)",
+        "description": "Registrar oferta por escrito. Incluir preço, prazos e condições"
+      },
+      {
+        "id": 6,
+        "title": "Contratar imobiliária (se aplicável)",
+        "description": "Combinar comissão (5-6%). Assinatura do contrato de intermediação"
+      },
+      {
+        "id": 7,
+        "title": "Verificar documentação do imóvel",
+        "description": "Pedir matrícula, certidão de ônus, IPTU, contas de água/luz"
+      },
+      {
+        "id": 8,
+        "title": "Vistoria de engenharia",
+        "description": "Contratar engenheiro. Verificar estrutura, encanamento, elétrica"
+      },
+      {
+        "id": 9,
+        "title": "Contratar advogado imobiliário",
+        "description": "Revisar contrato. Proteger seus direitos. Custo: ~1-2% do valor"
+      },
+      {
+        "id": 10,
+        "title": "Contratar seguro residencial",
+        "description": "Obrigatório para financiamento. Cobre incêndio, roubo, etc"
+      },
+      {
+        "id": 11,
+        "title": "Aplicar para financiamento final",
+        "description": "Submeter documentos completos ao banco. Análise de crédito"
+      },
+      {
+        "id": 12,
+        "title": "Pagar ITBI e registro",
+        "description": "Imposto sobre transmissão (2-3%). Taxa de registro cartório (~0,5%)"
+      },
+      {
+        "id": 13,
+        "title": "Assinatura da escritura",
+        "description": "Encontro no cartório. Assinar documentos finais com vendedor"
+      },
+      {
+        "id": 14,
+        "title": "Transferência de posse",
+        "description": "Mudar para o imóvel. Transferir contas de água, luz, gás"
+      },
+      {
+        "id": 15,
+        "title": "Registrar no cartório",
+        "description": "Documento final. Seu nome na matrícula. Você é o dono!"
+      }
+    ],
+    "timeline": [
+      {
+        "day": "1-4",
+        "title": "Preparação Financeira",
+        "tasks": ["Calcular orçamento", "Pedir pré-aprovação", "Pesquisar regiões"]
+      },
+      {
+        "day": "5-12",
+        "title": "Busca de Imóvel",
+        "tasks": ["Visitar imóveis", "Negociar preço", "Fazer proposta"]
+      },
+      {
+        "day": "13-20",
+        "title": "Verificações Legais",
+        "tasks": ["Revisar documentos", "Vistoria técnica", "Contratar advogado"]
+      },
+      {
+        "day": "21-60",
+        "title": "Financiamento",
+        "tasks": ["Aplicar para financiamento", "Aprovar crédito", "Seguros"]
+      },
+      {
+        "day": "61-90",
+        "title": "Fechamento",
+        "tasks": ["Pagar impostos", "Assinatura", "Cartório", "Mudança"]
+      }
+    ],
+    "costs": {
+      "description": "Custos típicos para compra de imóvel (exemplo: R$ 500.000)",
+      "items": [
+        {
+          "item": "Entrada (10-20% do valor)",
+          "cost": "R$ 50.000 - R$ 100.000"
+        },
+        {
+          "item": "Comissão imobiliária (5-6%)",
+          "cost": "R$ 25.000 - R$ 30.000"
+        },
+        {
+          "item": "ITBI (Imposto, 2-3%)",
+          "cost": "R$ 10.000 - R$ 15.000"
+        },
+        {
+          "item": "Registro cartório (0,5%)",
+          "cost": "R$ 2.500 - R$ 5.000"
+        },
+        {
+          "item": "Vistoria técnica",
+          "cost": "R$ 500 - R$ 1.500"
+        },
+        {
+          "item": "Advogado imobiliário (1-2%)",
+          "cost": "R$ 5.000 - R$ 10.000"
+        },
+        {
+          "item": "Seguro residencial (anual)",
+          "cost": "R$ 1.000 - R$ 3.000"
+        }
+      ]
+    },
+    "documents": [
+      {
+        "name": "Tabela de Simulação de Financiamento",
+        "description": "Calcule parcelas, juros e taxa mensal",
+        "url": "/docs/simulador-financiamento.xlsx"
+      },
+      {
+        "name": "Checklist de Vistoria Técnica",
+        "description": "Pontos a verificar no imóvel",
+        "url": "/docs/checklist-vistoria.pdf"
+      },
+      {
+        "name": "Modelo de Proposta de Compra",
+        "description": "Template para fazer sua oferta",
+        "url": "/docs/proposta-compra.docx"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Quanto preciso de entrada?",
+        "a": "Bancos exigem de 10-20% do valor. Alguns programas (como Minha Casa Minha Vida) aceitam menor."
+      },
+      {
+        "q": "Qual taxa de juros típica?",
+        "a": "Varia de 6-10% ao ano dependendo do banco, sua renda e histórico de crédito."
+      },
+      {
+        "q": "Posso comprar imóvel com uma pessoa?",
+        "a": "Sim! A propriedade pode ser em nome de dois. Ambos aparecem na matrícula."
+      },
+      {
+        "q": "Qual o tempo total?",
+        "a": "De 3-6 meses tipicamente. Financiamento é o que mais demora."
+      },
+      {
+        "q": "Preciso de advogado?",
+        "a": "Altamente recomendado! Custa 1-2% mas protege seus direitos."
+      }
+    ]
+  }
+}

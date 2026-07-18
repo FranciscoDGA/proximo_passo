@@ -1,0 +1,124 @@
+{
+  "id": "imposto-renda",
+  "slug": "imposto-renda",
+  "title": "Declarar Imposto de Renda",
+  "description": "Guia passo a passo para declarar seus impostos com segurança",
+  "category": "financeiro",
+  "stepsCount": 10,
+  "estimatedTime": "2-3 horas",
+  "sections": {
+    "overview": {
+      "description": "Declarar IR é obrigatório para quem ganha acima de um piso. Este guia torna o processo simples e seguro."
+    },
+    "checklist": [
+      { "id": 1, "title": "Verificar se precisa declarar", "description": "Renda > R$ 30.639 em 2024" },
+      { "id": 2, "title": "Reunir todos os recibos", "description": "Holerite, comprovantes de ganhos extras" },
+      { "id": 3, "title": "Separar despesas dedutíveis", "description": "Saúde, educação, contribuição sindical" },
+      { "id": 4, "title": "Compilar ganhos de outros investimentos", "description": "Rendimentos de poupança, ações, aluguel" },
+      { "id": 5, "title": "Baixar programa IRPF", "description": "No site da Receita Federal" },
+      { "id": 6, "title": "Preencher dados pessoais", "description": "Nome, CPF, endereço" },
+      { "id": 7, "title": "Incluir renda de todas as fontes", "description": "Emprego, freelance, investimentos" },
+      { "id": 8, "title": "Incluir deduções", "description": "Saúde, educação, previdência" },
+      { "id": 9, "title": "Revisar e validar dados", "description": "Conferir se está tudo correto" },
+      { "id": 10, "title": "Transmitir declaração", "description": "Enviar para Receita Federal" }
+    ],
+    "timeline": [
+      {
+        "day": "Jan-Fev",
+        "title": "Coleta de Documentos",
+        "tasks": [
+          "Reúna todos os holerites do ano anterior",
+          "Colete extratos de investimentos (poupança, ações, etc)",
+          "Solicite comprovantes de doações e despesas dedutíveis",
+          "Organize recibos de saúde, educação e previdência privada"
+        ]
+      },
+      {
+        "day": "Mar",
+        "title": "Preparação da Declaração",
+        "tasks": [
+          "Baixe o programa IRPF do site da Receita Federal",
+          "Organize dados de ganhos de todas as fontes",
+          "Classifique despesas dedutíveis por categoria",
+          "Prepare informações de bens (imóveis, veículos, etc)"
+        ]
+      },
+      {
+        "day": "Abr-Mai",
+        "title": "Preenchimento e Revisão",
+        "tasks": [
+          "Preencha dados pessoais e de residência",
+          "Inclua todas as fontes de renda",
+          "Insira deduções (saúde, educação, previdência)",
+          "Revise cuidadosamente todas as informações"
+        ]
+      },
+      {
+        "day": "Jun-Jul",
+        "title": "Transmissão e Acompanhamento",
+        "tasks": [
+          "Transmita a declaração para a Receita Federal",
+          "Guarde comprovante de transmissão com segurança",
+          "Acompanhe situação no e-CAC da Receita",
+          "Prepare para possível malha fina se necessário"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "name": "Comprovante de Rendimento (Holerite)",
+        "description": "Recibos mensais de salários e outras remunerações",
+        "url": "#"
+      },
+      {
+        "name": "Comprovante de Investimentos",
+        "description": "Extratos anuais de poupança, ações, fundos e aplicações",
+        "url": "#"
+      },
+      {
+        "name": "Recibos de Deduções",
+        "description": "Comprovantes de gastos com saúde, educação e previdência",
+        "url": "#"
+      },
+      {
+        "name": "Formulário IRPF",
+        "description": "Programa de declaração disponível no site da Receita Federal",
+        "url": "#"
+      },
+      {
+        "name": "Guia de Orientações",
+        "description": "Manual oficial com instruções passo a passo da Receita Federal",
+        "url": "#"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Como sei se preciso fazer declaração?",
+        "a": "É obrigatório se: renda bruta anual > R$ 30.639 (valores de 2024), rendimento de aplicação financeira > R$ 40, bens/direitos > R$ 300 mil, ou teve atividade rural com receita > R$ 142.798."
+      },
+      {
+        "q": "Qual é a multa por atraso na declaração?",
+        "a": "A multa mínima é de R$ 100 e máxima de 75% do imposto devido. Quanto mais atrasado, maior o risco de malha fina. Declare assim que possível."
+      },
+      {
+        "q": "O que entra em despesas dedutíveis?",
+        "a": "Gastos com: saúde (médico, dentista, medicamentos), educação (escola, faculdade), previdência privada, pensão alimentícia. Não entra: mercado, gasolina, aluguel, conta de água."
+      },
+      {
+        "q": "Preciso guardar os recibos para sempre?",
+        "a": "Sim. É necessário guardar por 5 anos. A Receita pode solicitar comprovantes durante esse período. Após 5 anos, pode descartar com segurança."
+      },
+      {
+        "q": "O que fazer se receber uma multa de imposto?",
+        "a": "Você pode: pagar integral com desconto de 30%, parcelar em até 60 meses, ou contestar se discordar. Recomenda-se consultar um contador para analisar sua situação."
+      }
+    ],
+    "costs": {
+      "items": [
+        { "item": "Imposto de Renda (variável)", "cost": "Pode ser crédito ou débito" },
+        { "item": "Declaração via CAC (grátis)", "cost": "R$ 0" },
+        { "item": "Consultor contábil (opcional)", "cost": "R$ 200-500" }
+      ]
+    }
+  }
+}
