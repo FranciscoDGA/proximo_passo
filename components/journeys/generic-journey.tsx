@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Checklist } from "@/components/journeys/checklist";
-import { ProgressBar } from "@/components/journeys/progress-bar";
 import { Chat } from "@/components/journeys/chat";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, FileText } from "lucide-react";
+import { CheckCircle2, Clock, FileText, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface JourneyData {
   id: string;
   slug: string;
   title: string;
   description: string;
+  type: string;
   category: string;
   stepsCount: number;
   estimatedTime: string;
@@ -57,263 +57,152 @@ interface GenericJourneyProps {
 }
 
 export function GenericJourney({ journey }: GenericJourneyProps) {
-  const [activeTab, setActiveTab] = useState<
-    "checklist" | "timeline" | "docs" | "faqs" | "chat"
-  >("checklist");
-
   const checklist = journey.sections.checklist.map((item) => ({
     id: item.id,
     title: item.title,
     description: item.description,
   }));
 
-  const tabs = [
-    { key: "checklist", label: "Checklist", icon: "✓" },
-    ...(journey.sections.timeline
-      ? [{ key: "timeline", label: "Timeline", icon: "📅" }]
-      : []),
-    ...(journey.sections.documents
-      ? [{ key: "docs", label: "Documentos", icon: "📄" }]
-      : []),
-    ...(journey.sections.faqs ? [{ key: "faqs", label: "FAQs", icon: "❓" }] : []),
-    { key: "chat", label: "Especialista", icon: "💬" },
-  ];
+  const backLink = journey.type === "conquistar" ? "/conquistar" : "/resolver";
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
-      <div className="flex-1">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 py-12">
-          <div className="container-safe">
-            <div className="grid gap-8 lg:grid-cols-3">
-              <div className="lg:col-span-2">
-                <Badge>{journey.category}</Badge>
-                <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-white">
+      <main className="flex-1">
+        {/* Minimal Hero Header */}
+        <section className="bg-white border-b border-slate-200 dark:bg-slate-900 dark:border-slate-800 pt-8 pb-12">
+          <div className="container-safe max-w-6xl mx-auto px-6">
+            <Link 
+              href={backLink}
+              className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors mb-6 group"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              Voltar
+            </Link>
+
+            <div className="flex flex-col md:flex-row gap-6 md:items-end justify-between">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-2xl"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <Badge variant="secondary" className="bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300">
+                    {journey.category}
+                  </Badge>
+                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1">
+                    <Clock className="h-3 w-3" /> {journey.estimatedTime}
+                  </span>
+                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1">
+                    <CheckCircle2 className="h-3 w-3" /> {journey.stepsCount} etapas
+                  </span>
+                </div>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
                   {journey.title}
                 </h1>
-                <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
+                <p className="text-lg text-slate-600 dark:text-slate-400">
                   {journey.description}
                 </p>
-
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                    <span className="text-slate-600 dark:text-slate-300">
-                      {journey.stepsCount} etapas
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-blue-500" />
-                    <span className="text-slate-600 dark:text-slate-300">
-                      {journey.estimatedTime}
-                    </span>
-                  </div>
-                </div>
-
-                <Card className="mt-8">
-                  <CardHeader>
-                    <CardTitle>Visão Geral</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-slate-700 dark:text-slate-300">
-                      {journey.sections.overview.description}
-                    </p>
-                    {journey.sections.overview.benefits && (
-                      <ul className="mt-4 space-y-2">
-                        {journey.sections.overview.benefits.map((benefit) => (
-                          <li key={benefit} className="flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                            <span className="text-slate-700 dark:text-slate-300">
-                              {benefit}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div>
-                <ProgressBar
-                  current={0}
-                  total={journey.stepsCount}
-                  journeySlug={journey.slug}
-                />
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Tabs Navigation */}
-        <section className="border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 bg-white dark:bg-slate-950">
-          <div className="container-safe">
-            <div className="flex gap-8 overflow-x-auto">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() =>
-                    setActiveTab(tab.key as typeof activeTab)
-                  }
-                  className={`border-b-2 px-4 py-4 font-medium transition-colors whitespace-nowrap ${
-                    activeTab === tab.key
-                      ? "border-primary text-primary"
-                      : "border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  }`}
-                >
-                  {tab.icon} {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Content */}
+        {/* Unified Layout: Left Checklist, Right Chat/Sidebar */}
         <section className="py-12">
-          <div className="container-safe grid gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              {activeTab === "checklist" && (
-                <Checklist items={checklist} journeySlug={journey.slug} journeyId={journey.id} />
-              )}
+          <div className="container-safe max-w-6xl mx-auto px-6">
+            <div className="grid gap-12 lg:grid-cols-12 items-start">
+              
+              {/* Left Column (Checklist and Content) */}
+              <div className="lg:col-span-7 xl:col-span-8 space-y-12">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Checklist items={checklist} journeySlug={journey.slug} journeyId={journey.id} />
+                </motion.div>
 
-              {activeTab === "timeline" &&
-                journey.sections.timeline && (
-                  <div className="space-y-6">
-                    {journey.sections.timeline.map((phase) => (
-                      <Card key={phase.day}>
-                        <CardHeader>
-                          <CardTitle className="text-lg">Dia {phase.day}</CardTitle>
-                          <CardDescription>{phase.title}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2">
-                            {phase.tasks.map((task) => (
-                              <li key={task} className="flex items-center gap-2">
-                                <div className="h-2 w-2 rounded-full bg-primary" />
-                                <span className="text-slate-700 dark:text-slate-300">
-                                  {task}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-
-              {activeTab === "docs" &&
-                journey.sections.documents && (
+                {journey.sections.overview.benefits && (
                   <div className="space-y-4">
-                    {journey.sections.documents.map((doc) => (
-                      <Card key={doc.name}>
-                        <CardContent className="p-6">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-4">
-                              <FileText className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                              <div>
-                                <h3 className="font-semibold text-slate-900 dark:text-white">
-                                  {doc.name}
-                                </h3>
-                                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                                  {doc.description}
-                                </p>
-                              </div>
-                            </div>
-                            <Button variant="outline" size="sm">
-                              Download
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">O que você ganha ao terminar</h3>
+                    <ul className="grid gap-3 sm:grid-cols-2">
+                      {journey.sections.overview.benefits.map((benefit) => (
+                        <li key={benefit} className="flex items-start gap-3 p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/30">
+                          <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                            {benefit}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
-
-              {activeTab === "faqs" &&
-                journey.sections.faqs && (
-                  <div className="space-y-6">
-                    {journey.sections.faqs.map((faq, idx) => (
-                      <div key={idx}>
-                        <h3 className="font-semibold text-slate-900 dark:text-white">
-                          {faq.q}
-                        </h3>
-                        <p className="mt-2 text-slate-600 dark:text-slate-400">{faq.a}</p>
-                        {idx < journey.sections.faqs!.length - 1 && (
-                          <div className="mt-6 border-t border-slate-200 dark:border-slate-800" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-              {activeTab === "chat" && (
-                <Chat journeyId={journey.id} journeyTitle={journey.title} />
-              )}
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-4">
-              {journey.sections.costs && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Custos Envolvidos</CardTitle>
-                    {journey.sections.costs.description && (
-                      <CardDescription>
-                        {journey.sections.costs.description}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {journey.sections.costs.items.map((item) => (
-                        <div key={item.item} className="flex justify-between">
-                          <span className="text-slate-700 dark:text-slate-300">
-                            {item.item}
-                          </span>
-                          <span className="font-semibold text-slate-900 dark:text-white">
-                            {item.cost}
-                          </span>
-                        </div>
+                
+                {journey.sections.documents && (
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Modelos e Documentos</h3>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {journey.sections.documents.map((doc) => (
+                        <a href={doc.url} key={doc.name} className="group block p-5 rounded-2xl border border-slate-200 bg-white hover:border-primary/40 hover:shadow-sm transition-all dark:bg-slate-900 dark:border-slate-800">
+                          <FileText className="h-8 w-8 text-slate-400 group-hover:text-primary mb-3 transition-colors" />
+                          <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{doc.name}</h4>
+                          <p className="text-xs text-slate-500">{doc.description}</p>
+                        </a>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+                  </div>
+                )}
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Próximos Passos</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ol className="list-inside space-y-2 text-sm">
-                    <li className="text-slate-700 dark:text-slate-300">
-                      1. Complete o checklist acima
-                    </li>
-                    <li className="text-slate-700 dark:text-slate-300">
-                      2. Siga a timeline
-                    </li>
-                    <li className="text-slate-700 dark:text-slate-300">
-                      3. Use os documentos
-                    </li>
-                    <li className="text-slate-700 dark:text-slate-300">
-                      4. Fale com o especialista
-                    </li>
-                  </ol>
-                </CardContent>
-              </Card>
+              {/* Right Column (Sidebar/Chat) */}
+              <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
+                
+                {/* AI Assistant Chat */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="shadow-xl shadow-primary/5 rounded-2xl overflow-hidden"
+                >
+                  <Chat journeyId={journey.id} journeyTitle={journey.title} />
+                </motion.div>
+
+                {/* Costs Breakdown */}
+                {journey.sections.costs && (
+                  <Card className="shadow-none border-slate-200 dark:border-slate-800">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="text-base">Custos Estimados</CardTitle>
+                      {journey.sections.costs.description && (
+                        <CardDescription className="text-xs">
+                          {journey.sections.costs.description}
+                        </CardDescription>
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {journey.sections.costs.items.map((item) => (
+                          <div key={item.item} className="flex justify-between items-center text-sm border-b border-slate-100 dark:border-slate-800 pb-2 last:border-0 last:pb-0">
+                            <span className="text-slate-600 dark:text-slate-400">
+                              {item.item}
+                            </span>
+                            <span className="font-medium text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
+                              {item.cost}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+              
             </div>
           </div>
         </section>
-      </div>
-
-      <footer className="border-t border-slate-200 dark:border-slate-800">
-        <div className="container-safe py-8 text-center text-sm text-slate-600 dark:text-slate-400">
-          <p>&copy; 2024 Próximo Passo. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      </main>
     </div>
   );
 }

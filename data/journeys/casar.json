@@ -11,18 +11,66 @@
       "description": "Casamento legal requer diversos procedimentos. Este guia cobre tanto a parte legal quanto o planejamento do evento."
     },
     "checklist": [
-      { "id": 1, "title": "Definir regime de bens", "description": "Comunhão, separação ou participação final" },
-      { "id": 2, "title": "Reunir documentação pessoal", "description": "RG, CPF, comprovante de estado civil" },
-      { "id": 3, "title": "Solicitar certidão de antecedentes", "description": "No cartório ou polícia" },
-      { "id": 4, "title": "Agendar no cartório", "description": "Marcar data da celebração" },
-      { "id": 5, "title": "Providenciar testemunhas (2)", "description": "Maiores de 18 anos" },
-      { "id": 6, "title": "Comparecer à cerimônia civil", "description": "Cartório com ambos os noivos" },
-      { "id": 7, "title": "Receber certidão de casamento", "description": "Documento oficial" },
-      { "id": 8, "title": "Alterar nome e documentos", "description": "CPF, RG, carteira de motorista" },
-      { "id": 9, "title": "Comunicar mudança ao trabalho", "description": "Atualizar beneficiários, nome na folha" },
-      { "id": 10, "title": "Atualizar planos de saúde", "description": "Incluir cônjuge como dependente" },
-      { "id": 11, "title": "Revisar seguros", "description": "Atualizar beneficiário se necessário" },
-      { "id": 12, "title": "Organizar recepção (opcional)", "description": "Festinha com família e amigos" }
+      {
+        "id": 1,
+        "title": "Definir regime de bens",
+        "description": "Comunhão, separação ou participação final"
+      },
+      {
+        "id": 2,
+        "title": "Reunir documentação pessoal",
+        "description": "RG, CPF, comprovante de estado civil"
+      },
+      {
+        "id": 3,
+        "title": "Solicitar certidão de antecedentes",
+        "description": "No cartório ou polícia"
+      },
+      {
+        "id": 4,
+        "title": "Agendar no cartório",
+        "description": "Marcar data da celebração"
+      },
+      {
+        "id": 5,
+        "title": "Providenciar testemunhas (2)",
+        "description": "Maiores de 18 anos"
+      },
+      {
+        "id": 6,
+        "title": "Comparecer à cerimônia civil",
+        "description": "Cartório com ambos os noivos"
+      },
+      {
+        "id": 7,
+        "title": "Receber certidão de casamento",
+        "description": "Documento oficial"
+      },
+      {
+        "id": 8,
+        "title": "Alterar nome e documentos",
+        "description": "CPF, RG, carteira de motorista"
+      },
+      {
+        "id": 9,
+        "title": "Comunicar mudança ao trabalho",
+        "description": "Atualizar beneficiários, nome na folha"
+      },
+      {
+        "id": 10,
+        "title": "Atualizar planos de saúde",
+        "description": "Incluir cônjuge como dependente"
+      },
+      {
+        "id": 11,
+        "title": "Revisar seguros",
+        "description": "Atualizar beneficiário se necessário"
+      },
+      {
+        "id": 12,
+        "title": "Organizar recepção (opcional)",
+        "description": "Festinha com família e amigos"
+      }
     ],
     "timeline": [
       {
@@ -127,11 +175,24 @@
     ],
     "costs": {
       "items": [
-        { "item": "Taxa de casamento civil", "cost": "R$ 200-500" },
-        { "item": "Certidões e documentos", "cost": "R$ 100-300" },
-        { "item": "Alteração de documentos", "cost": "R$ 0-200" },
-        { "item": "Recepção (opcional)", "cost": "Variável (R$ 500-50.000+)" }
+        {
+          "item": "Taxa de casamento civil",
+          "cost": "R$ 200-500"
+        },
+        {
+          "item": "Certidões e documentos",
+          "cost": "R$ 100-300"
+        },
+        {
+          "item": "Alteração de documentos",
+          "cost": "R$ 0-200"
+        },
+        {
+          "item": "Recepção (opcional)",
+          "cost": "Variável (R$ 500-50.000+)"
+        }
       ]
     }
-  }
+  },
+  "type": "conquistar"
 }

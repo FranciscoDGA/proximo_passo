@@ -100,27 +100,48 @@
       {
         "day": "1-4",
         "title": "Preparação Financeira",
-        "tasks": ["Calcular orçamento", "Pedir pré-aprovação", "Pesquisar regiões"]
+        "tasks": [
+          "Calcular orçamento",
+          "Pedir pré-aprovação",
+          "Pesquisar regiões"
+        ]
       },
       {
         "day": "5-12",
         "title": "Busca de Imóvel",
-        "tasks": ["Visitar imóveis", "Negociar preço", "Fazer proposta"]
+        "tasks": [
+          "Visitar imóveis",
+          "Negociar preço",
+          "Fazer proposta"
+        ]
       },
       {
         "day": "13-20",
         "title": "Verificações Legais",
-        "tasks": ["Revisar documentos", "Vistoria técnica", "Contratar advogado"]
+        "tasks": [
+          "Revisar documentos",
+          "Vistoria técnica",
+          "Contratar advogado"
+        ]
       },
       {
         "day": "21-60",
         "title": "Financiamento",
-        "tasks": ["Aplicar para financiamento", "Aprovar crédito", "Seguros"]
+        "tasks": [
+          "Aplicar para financiamento",
+          "Aprovar crédito",
+          "Seguros"
+        ]
       },
       {
         "day": "61-90",
         "title": "Fechamento",
-        "tasks": ["Pagar impostos", "Assinatura", "Cartório", "Mudança"]
+        "tasks": [
+          "Pagar impostos",
+          "Assinatura",
+          "Cartório",
+          "Mudança"
+        ]
       }
     ],
     "costs": {
@@ -195,5 +216,6 @@
         "a": "Altamente recomendado! Custa 1-2% mas protege seus direitos."
       }
     ]
-  }
+  },
+  "type": "conquistar"
 }

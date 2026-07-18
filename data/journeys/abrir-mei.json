@@ -23,76 +23,114 @@
         "id": 1,
         "title": "Reunir documentação pessoal",
         "description": "Prepare CPF, RG e comprovante de endereço. Você vai precisar desses dados para preenchimento.",
-        "documents": ["CPF", "RG", "Comprovante de Endereço (conta de água, energia, etc)"]
+        "documents": [
+          "CPF",
+          "RG",
+          "Comprovante de Endereço (conta de água, energia, etc)"
+        ]
       },
       {
         "id": 2,
         "title": "Escolher a atividade principal",
         "description": "Defina qual é sua principal atividade profissional. Por exemplo: Consultor, Desenvolvedor, Consultor de Tecnologia.",
-        "documents": ["Lista de Atividades CNAE"]
+        "documents": [
+          "Lista de Atividades CNAE"
+        ]
       },
       {
         "id": 3,
         "title": "Acessar Portal MEI oficial",
         "description": "Acesse www.gov.br/meu-negocio-mei e clique em 'Solicitação de Formalização'",
-        "documents": ["Acesso ao gov.br com CPF e senha"]
+        "documents": [
+          "Acesso ao gov.br com CPF e senha"
+        ]
       },
       {
         "id": 4,
         "title": "Preencher formulário de formalização",
         "description": "Complete o formulário com dados pessoais, atividade principal e forma de tributação (escolha Simples Nacional).",
-        "documents": ["Formulário de Formalização RFB"]
+        "documents": [
+          "Formulário de Formalização RFB"
+        ]
       },
       {
         "id": 5,
         "title": "Validar dados no portal",
         "description": "Revise cuidadosamente todos os dados preenchidos. Qualquer erro pode dificultar depois.",
-        "documents": ["Checklist de Validação"]
+        "documents": [
+          "Checklist de Validação"
+        ]
       },
       {
         "id": 6,
         "title": "Formalizar MEI oficialmente",
         "description": "Clique em 'Enviar' para formalizar. Você receberá um número de inscrição na hora.",
-        "documents": ["Recibo de Formalização (CCMEI)"]
+        "documents": [
+          "Recibo de Formalização (CCMEI)"
+        ]
       },
       {
         "id": 7,
         "title": "Registrar na prefeitura local",
         "description": "Vá até a prefeitura de sua cidade com o CCMEI para registrar sua licença de atividade.",
-        "documents": ["Alvará de Funcionamento"]
+        "documents": [
+          "Alvará de Funcionamento"
+        ]
       },
       {
         "id": 8,
         "title": "Abrir conta bancária empresarial",
         "description": "Com o número do MEI em mãos, vá a um banco abrir uma conta businessz para receber seus pagamentos.",
-        "documents": ["Conta Bancária Empresarial", "Comprovante de Regularização"]
+        "documents": [
+          "Conta Bancária Empresarial",
+          "Comprovante de Regularização"
+        ]
       }
     ],
     "timeline": [
       {
         "day": 1,
         "title": "Preparação",
-        "tasks": ["Reunir documentos", "Pesquisar sobre MEI", "Acessar portal"]
+        "tasks": [
+          "Reunir documentos",
+          "Pesquisar sobre MEI",
+          "Acessar portal"
+        ]
       },
       {
         "day": 2,
         "title": "Formalização",
-        "tasks": ["Preencher formulário", "Validar dados", "Enviar solicitação"]
+        "tasks": [
+          "Preencher formulário",
+          "Validar dados",
+          "Enviar solicitação"
+        ]
       },
       {
         "day": 3,
         "title": "Confirmação",
-        "tasks": ["Receber CCMEI", "Verificar status"]
+        "tasks": [
+          "Receber CCMEI",
+          "Verificar status"
+        ]
       },
       {
         "day": "4-5",
         "title": "Registros Municipais",
-        "tasks": ["Ir à prefeitura", "Obter alvará", "Registrar atividade"]
+        "tasks": [
+          "Ir à prefeitura",
+          "Obter alvará",
+          "Registrar atividade"
+        ]
       },
       {
         "day": "6-7",
         "title": "Conta Bancária",
-        "tasks": ["Visitar banco", "Abrir conta", "Configurar pagamentos"]
+        "tasks": [
+          "Visitar banco",
+          "Abrir conta",
+          "Configurar pagamentos"
+        ]
       }
     ],
     "documents": [
@@ -151,5 +189,6 @@
         }
       ]
     }
-  }
+  },
+  "type": "conquistar"
 }

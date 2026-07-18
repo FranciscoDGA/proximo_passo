@@ -6,6 +6,7 @@ export interface Journey {
   slug: string;
   title: string;
   description: string;
+  type: string;
   category: string;
   stepsCount: number;
   estimatedTime: string;
