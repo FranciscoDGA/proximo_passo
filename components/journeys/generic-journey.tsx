@@ -221,7 +221,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                           {m.content}
                           
                           {/* Fallback de UI para tool calls (Functions) no chat */}
-                          {m.toolInvocations?.map(tool => (
+                          {m.toolInvocations?.map((tool: any) => (
                             <div key={tool.toolCallId} className="mt-2 p-2 bg-slate-100 dark:bg-slate-900 rounded text-xs text-slate-500">
                               🛠️ Ação: {tool.toolName} executada.
                             </div>
