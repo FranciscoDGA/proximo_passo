@@ -18,7 +18,6 @@ export function LifeNavigator() {
   const router = useRouter();
   const [step, setStep] = useState<DiagnosticStep>("INTENT");
   const [intent, setIntent] = useState<Intent>(null);
-  const [selectedJourney, setSelectedJourney] = useState<string | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const handleIntent = (selected: Intent) => {
@@ -27,7 +26,6 @@ export function LifeNavigator() {
   };
 
   const handleJourneySelect = (journeyId: string) => {
-    setSelectedJourney(journeyId);
     setStep("QUESTIONS");
   };
 
