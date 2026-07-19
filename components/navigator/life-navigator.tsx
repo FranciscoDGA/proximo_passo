@@ -25,7 +25,7 @@ export function LifeNavigator() {
     setStep("CATEGORY");
   };
 
-  const handleJourneySelect = (journeyId: string) => {
+  const handleJourneySelect = () => {
     setStep("QUESTIONS");
   };
 
@@ -162,7 +162,7 @@ export function LifeNavigator() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               key={opt.id}
-              onClick={() => handleJourneySelect(opt.id)}
+              onClick={() => handleJourneySelect()}
               className="w-full flex items-center justify-between p-6 bg-white/[0.02] border border-white/[0.05] rounded-2xl hover:bg-white/[0.05] hover:border-white/20 transition-all group text-left backdrop-blur-sm"
             >
               <div className="flex items-center">
