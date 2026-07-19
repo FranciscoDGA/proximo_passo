@@ -1,0 +1,246 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// CORE CATALOG: JOURNEY ENGINE DEFINITIONS (JDL)
+// ---------------------------------------------------------------------------
+
+model Journey {
+  id               String   @id @default(uuid())
+  slug             String   @unique
+  title            String
+  shortDescription String
+  longDescription  String?
+  universe         String   // "CONSTRUIR" | "RECOMEÇAR"
+  category         String
+  estimatedTime    String
+  complexity       String
+  emotionalLevel   String
+  seoPillar        String?
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  stages           Stage[]
+  specialists      JourneySpecialist[]
+  userJourneys     UserJourney[]
+}
+
+model Stage {
+  id             String   @id @default(uuid())
+  journeyId      String
+  order          Int
+  title          String
+  description    String
+  estimatedTime  String?
+  required       Boolean  @default(true)
+  unlockRule     String?  // Regra condicional JDL opcional
+
+  journey        Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  tasks          Task[]
+  decisions      Decision[]
+  documents      DocumentRequirement[]
+  tools          ToolReference[]
+  articles       ArticleReference[]
+  userStages     UserStage[]
+
+  @@index([journeyId])
+}
+
+model Task {
+  id               String   @id @default(uuid())
+  stageId          String
+  title            String
+  description      String
+  taskType         String   // "MANUAL" | "DOCUMENT" | "PAYMENT" | "VALIDATION"
+  estimatedMinutes Int?
+  required         Boolean  @default(true)
+  externalUrl      String?
+  metadata         Json?    // Dados flexíveis, ex: valor do pagamento
+
+  stage            Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  userTasks        UserTask[]
+
+  @@index([stageId])
+}
+
+model Decision {
+  id             String   @id @default(uuid())
+  stageId        String
+  question       String
+  decisionType   String   // "SINGLE_CHOICE" | "MULTIPLE_CHOICE"
+  
+  stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  options        DecisionOption[]
+  userDecisions  UserDecision[]
+
+  @@index([stageId])
+}
+
+model DecisionOption {
+  id             String   @id @default(uuid())
+  decisionId     String
+  label          String
+  value          String
+  nextStageId    String?  // Se escolhida, para qual etapa condicional leva
+  rules          Json?    // DSL rules
+  
+  decision       Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+
+  @@index([decisionId])
+}
+
+model DocumentRequirement {
+  id             String   @id @default(uuid())
+  stageId        String
+  name           String
+  description    String
+  required       Boolean  @default(true)
+  issuer         String?
+  validityDays   Int?
+  notes          String?
+
+  stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  userDocuments  UserDocument[]
+
+  @@index([stageId])
+}
+
+model ToolReference {
+  id             String   @id @default(uuid())
+  stageId        String
+  toolId         String   // Referência a um ID externo ou interno de ferramenta
+  reason         String?
+
+  stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+
+  @@index([stageId])
+}
+
+model ArticleReference {
+  id             String   @id @default(uuid())
+  stageId        String
+  articleId      String   // Slug ou ID do artigo
+  priority       Int      @default(0)
+
+  stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+
+  @@index([stageId])
+}
+
+model JourneySpecialist {
+  id             String   @id @default(uuid())
+  journeyId      String
+  name           String
+  systemPrompt   String
+  avatar         String?
+  tone           String?
+  capabilities   Json?
+
+  journey        Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+
+  @@index([journeyId])
+}
+
+model Rule {
+  id             String   @id @default(uuid())
+  name           String
+  condition      String   // DSL JSON para avaliação
+  action         String
+  createdAt      DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// USER STATE: JOURNEY PROGRESSION
+// ---------------------------------------------------------------------------
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  name           String
+  plan           String   @default("FREE")
+  createdAt      DateTime @default(now())
+
+  userJourneys   UserJourney[]
+}
+
+model UserJourney {
+  id                 String   @id @default(uuid())
+  userId             String
+  journeyId          String
+  status             String   // "IN_PROGRESS" | "COMPLETED" | "PAUSED"
+  startedAt          DateTime @default(now())
+  completedAt        DateTime?
+  currentStageId     String?
+  progressPercentage Int      @default(0)
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  journey            Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  userStages         UserStage[]
+  userTasks          UserTask[]
+  userDecisions      UserDecision[]
+  userDocuments      UserDocument[]
+
+  @@unique([userId, journeyId])
+}
+
+model UserStage {
+  id             String   @id @default(uuid())
+  userJourneyId  String
+  stageId        String
+  status         String   // "LOCKED" | "UNLOCKED" | "COMPLETED"
+  unlockedAt     DateTime?
+  completedAt    DateTime?
+
+  userJourney    UserJourney @relation(fields: [userJourneyId], references: [id], onDelete: Cascade)
+  stage          Stage       @relation(fields: [stageId], references: [id], onDelete: Cascade)
+
+  @@unique([userJourneyId, stageId])
+}
+
+model UserTask {
+  id             String   @id @default(uuid())
+  userJourneyId  String
+  taskId         String
+  completed      Boolean  @default(false)
+  completedAt    DateTime?
+  notes          String?
+
+  userJourney    UserJourney @relation(fields: [userJourneyId], references: [id], onDelete: Cascade)
+  task           Task        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([userJourneyId, taskId])
+}
+
+model UserDecision {
+  id             String   @id @default(uuid())
+  userJourneyId  String
+  decisionId     String
+  selectedOption String
+  answeredAt     DateTime @default(now())
+
+  userJourney    UserJourney @relation(fields: [userJourneyId], references: [id], onDelete: Cascade)
+  decision       Decision    @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+
+  @@unique([userJourneyId, decisionId])
+}
+
+model UserDocument {
+  id                    String   @id @default(uuid())
+  userJourneyId         String
+  documentRequirementId String
+  uploaded              Boolean  @default(false)
+  verified              Boolean  @default(false)
+  expiresAt             DateTime?
+  fileUrl               String?
+
+  userJourney           UserJourney @relation(fields: [userJourneyId], references: [id], onDelete: Cascade)
+  documentRequirement   DocumentRequirement @relation(fields: [documentRequirementId], references: [id], onDelete: Cascade)
+
+  @@unique([userJourneyId, documentRequirementId])
+}

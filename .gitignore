@@ -47,3 +47,5 @@ Thumbs.db
 # Supabase
 supabase/.branches
 supabase/.temp
+
+/generated/prisma

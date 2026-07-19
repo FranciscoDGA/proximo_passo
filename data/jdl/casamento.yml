@@ -1,0 +1,72 @@
+id: "casamento-civil-v1"
+slug: "casamento-civil"
+title: "Casamento Civil"
+shortDescription: "Guia completo e seguro para casar no civil sem burocracia desnecessária."
+longDescription: "Uma jornada projetada para acompanhar os noivos desde a decisão do regime de bens até o dia da cerimônia no cartório, evitando esquecimentos e prazos perdidos."
+universe: "CONSTRUIR"
+category: "conquistar"
+estimatedTime: "3 meses"
+complexity: "Média"
+emotionalLevel: "Alto (Ansiedade Positiva)"
+seoPillar: "familia"
+stages:
+  - id: "stage-regime-bens"
+    order: 1
+    title: "Definição do Regime de Bens"
+    description: "A decisão patrimonial mais importante do casamento."
+    decisions:
+      - id: "decision-regime"
+        question: "Vocês já decidiram o regime de bens?"
+        decisionType: "SINGLE_CHOICE"
+        options:
+          - id: "opt-comunhao-parcial"
+            label: "Sim, Comunhão Parcial de Bens"
+            value: "PARCIAL"
+          - id: "opt-separacao-total"
+            label: "Sim, Separação Total (Com Pacto)"
+            value: "SEPARACAO"
+            rules:
+              action: "UNLOCK_PACTO_ANTENUPCIAL"
+          - id: "opt-comunhao-universal"
+            label: "Sim, Comunhão Universal (Com Pacto)"
+            value: "UNIVERSAL"
+            rules:
+              action: "UNLOCK_PACTO_ANTENUPCIAL"
+          - id: "opt-nao-sei"
+            label: "Ainda não sabemos"
+            value: "NAO_SEI"
+    tasks:
+      - id: "task-estudar-regimes"
+        title: "Ler sobre as diferenças entre regimes"
+        description: "Entenda o que entra ou não na divisão futura."
+        taskType: "LEITURA"
+        estimatedMinutes: 15
+
+  - id: "stage-pacto-antenupcial"
+    order: 2
+    title: "Pacto Antenupcial (Obrigatório para regimes específicos)"
+    description: "Etapa condicional destrancada apenas se vocês escolheram Separação Total ou Comunhão Universal."
+    unlockRule: "decision-regime === SEPARACAO" # Exemplo simples, o parser depois pode ser aprimorado com lógica OR
+    tasks:
+      - id: "task-lavrar-pacto"
+        title: "Agendar Cartório de Notas para Lavratura do Pacto"
+        description: "O pacto antenupcial deve ser feito em um Tabelionato de Notas antes da habilitação do casamento."
+        taskType: "MANUAL"
+        estimatedMinutes: 120
+
+  - id: "stage-documentacao"
+    order: 3
+    title: "Separação de Documentos"
+    description: "Documentos atualizados para dar entrada no cartório."
+    tasks:
+      - id: "task-certidoes"
+        title: "Solicitar certidões de nascimento atualizadas (90 dias)"
+        description: "As certidões não podem ter sido emitidas há mais de 90 dias."
+        taskType: "MANUAL"
+    documents:
+      - id: "doc-certidao-noivo"
+        name: "Certidão de Nascimento (Noivo 1)"
+        description: "Emitida nos últimos 90 dias"
+      - id: "doc-certidao-noiva"
+        name: "Certidão de Nascimento (Noivo 2)"
+        description: "Emitida nos últimos 90 dias"
