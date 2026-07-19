@@ -206,7 +206,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                   </div>
 
                   <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/30 dark:bg-slate-950/30">
-                    {messages.map(m => (
+                    {messages.map((m: any) => (
                       <div key={m.id} className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
                         {m.role === 'assistant' && (
                           <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
