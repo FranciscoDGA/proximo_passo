@@ -46,7 +46,7 @@ export async function POST(req: Request) {
       }),
       // Ferramentas futuras (ex: upload_document) podem ser injetadas aqui
     },
-    onFinish: async ({ text, toolCalls, toolResults }) => {
+    onFinish: async ({ text, toolCalls }) => {
       // 3. Persistência de Memória no Prisma (Opcional para análise futura)
       try {
         const session = await db.aIChatSession.upsert({
