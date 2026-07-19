@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User } from "lucide-react";
+import { Search } from "lucide-react";
 import { mockUser } from "@/lib/mock-data";
 
 interface NavbarProps {
