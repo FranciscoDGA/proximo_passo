@@ -4,11 +4,16 @@ import Link from "next/link";
 import { Search, User } from "lucide-react";
 import { mockUser } from "@/lib/mock-data";
 
-export function Navbar() {
+interface NavbarProps {
+  className?: string;
+  isDarkMode?: boolean;
+}
+
+export function Navbar({ className = "", isDarkMode = false }: NavbarProps) {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-md dark:border-slate-800/50 dark:bg-slate-950/80">
+    <nav className={`sticky top-0 z-50 w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-md dark:border-slate-800/50 dark:bg-slate-950/80 ${className}`}>
       <div className="container-safe flex h-16 items-center justify-between">
-        <Link href="/" className="text-xl font-serif font-semibold tracking-tight text-slate-900 dark:text-white">
+        <Link href="/" className={`text-xl font-serif font-semibold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
           Próximo Passo
         </Link>
         
