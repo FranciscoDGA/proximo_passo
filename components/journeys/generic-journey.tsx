@@ -6,7 +6,8 @@ import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ArrowRight } fr
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MockJourney, mockUser } from "@/lib/mock-data";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useChat } from "@ai-sdk/react";
 
 interface GenericJourneyProps {
   journey: MockJourney;
@@ -24,6 +25,27 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
 
   const progress = Math.round((Object.values(completedSteps).filter(Boolean).length / journey.steps.length) * 100);
   const backLink = journey.category === "conquistar" ? "/conquistar" : "/resolver";
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Integração com Vercel AI SDK
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api: "/api/chat",
+    body: {
+      userJourneyId: journey.id, // Em prod, seria o id do UserJourney do BD
+    },
+    initialMessages: [
+      {
+        id: "welcome",
+        role: "assistant",
+        content: `Olá ${mockUser.name.split(" ")[0]}! Sou ${journey.specialistName}, seu guia nesta jornada de ${journey.title}. Como posso te ajudar agora?`
+      }
+    ]
+  });
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
@@ -149,39 +171,63 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                   </div>
 
                   <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/30 dark:bg-slate-950/30">
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
-                        <Sparkles className="w-4 h-4 text-primary" />
+                    {messages.map(m => (
+                      <div key={m.id} className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                        {m.role === 'assistant' && (
+                          <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
+                            <Sparkles className="w-4 h-4 text-primary" />
+                          </div>
+                        )}
+                        <div className={`p-3 rounded-2xl border text-sm shadow-sm ${
+                          m.role === 'user' 
+                            ? 'bg-primary text-white border-primary rounded-tr-none'
+                            : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 rounded-tl-none'
+                        }`}>
+                          {m.content}
+                          
+                          {/* Fallback de UI para tool calls (Functions) no chat */}
+                          {m.toolInvocations?.map(tool => (
+                            <div key={tool.toolCallId} className="mt-2 p-2 bg-slate-100 dark:bg-slate-900 rounded text-xs text-slate-500">
+                              🛠️ Ação: {tool.toolName} executada.
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 text-sm shadow-sm">
-                        Olá {mockUser.name.split(' ')[0]}! Sou {journey.specialistName}, seu guia nesta jornada de {journey.title}. Como posso te ajudar agora?
-                      </div>
-                    </div>
+                    ))}
                     
-                    {progress > 0 && (
+                    {isLoading && (
                       <div className="flex gap-3">
                         <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
-                          <Sparkles className="w-4 h-4 text-primary" />
+                          <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                         </div>
-                        <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 text-sm shadow-sm">
-                          Excelente progresso! Já completamos {progress}% do nosso objetivo. Quer uma ajuda para resolver a próxima etapa?
+                        <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 text-sm shadow-sm flex gap-1">
+                          <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+                          <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-75"></span>
+                          <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce delay-150"></span>
                         </div>
                       </div>
                     )}
+                    <div ref={messagesEndRef} />
                   </div>
 
                   <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
-                    <div className="relative">
+                    <form onSubmit={handleSubmit} className="relative">
                       <input 
                         type="text" 
+                        value={input}
+                        onChange={handleInputChange}
                         placeholder="Pergunte ao especialista..." 
                         className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-4 pr-12 text-sm outline-none focus:border-primary dark:border-slate-700 dark:bg-slate-800"
-                        disabled
+                        disabled={isLoading}
                       />
-                      <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white" disabled>
+                      <button 
+                        type="submit" 
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white disabled:opacity-50" 
+                        disabled={isLoading || !input.trim()}
+                      >
                         <Send className="w-4 h-4 ml-0.5" />
                       </button>
-                    </div>
+                    </form>
                   </div>
                 </div>
 

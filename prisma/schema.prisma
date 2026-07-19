@@ -255,6 +255,7 @@ model UserJourney {
   userTasks          UserTask[]
   userDecisions      UserDecision[]
   userDocuments      UserDocument[]
+  aiChatSession      AIChatSession?
 
   @@unique([userId, journeyId])
 }
@@ -313,4 +314,31 @@ model UserDocument {
   documentRequirement   DocumentRequirement @relation(fields: [documentRequirementId], references: [id], onDelete: Cascade)
 
   @@unique([userJourneyId, documentRequirementId])
+}
+
+// ---------------------------------------------------------------------------
+// AI ORCHESTRATOR & MEMORY ENGINE
+// ---------------------------------------------------------------------------
+
+model AIChatSession {
+  id             String   @id @default(uuid())
+  userJourneyId  String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  userJourney    UserJourney @relation(fields: [userJourneyId], references: [id], onDelete: Cascade)
+  messages       AIMessage[]
+}
+
+model AIMessage {
+  id             String   @id @default(uuid())
+  sessionId      String
+  role           String   // "user" | "assistant" | "system" | "tool"
+  content        String
+  toolCalls      Json?    // Guarda o array de chamadas de ferramentas se houver
+  createdAt      DateTime @default(now())
+
+  session        AIChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  @@index([sessionId])
 }
