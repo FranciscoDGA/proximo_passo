@@ -1,124 +1,88 @@
-import Link from "next/link";
+"use client";
+
 import { Navbar } from "@/components/layout/navbar";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
-import { getAllArticles, getBlogCategories, formatDate } from "@/lib/blog";
+import { mockArticles, mockJourneys } from "@/lib/mock-data";
+import Link from "next/link";
+import { ArrowRight, Clock, BookOpen } from "lucide-react";
 
-export const metadata = {
-  title: "Blog - Próximo Passo",
-  description: "Artigos, guias e orientações sobre as principais decisões da vida",
-};
-
-export default function BlogPage() {
-  const articles = getAllArticles();
-  const categories = getBlogCategories();
-
+export default function Blog() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
       <Navbar />
-
-      <div className="flex-1 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
-        {/* Hero Section */}
-        <section className="py-16 sm:py-20">
-          <div className="container-safe">
-            <div className="max-w-2xl">
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white sm:text-5xl">
-                Blog Próximo Passo
-              </h1>
-              <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
-                Artigos, guias e orientações sobre as principais decisões e momentos importantes da vida
-              </p>
-              <p className="mt-2 text-slate-500 dark:text-slate-400">
-                {articles.length} artigos disponíveis
-              </p>
-            </div>
+      
+      <main className="flex-1 container-safe py-12 md:py-20">
+        <header className="mb-16 max-w-2xl text-center mx-auto">
+          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary mb-6">
+            <BookOpen className="w-4 h-4 mr-2" /> Biblioteca de Guias
           </div>
-        </section>
+          <h1 className="text-4xl font-serif font-semibold mb-4">Aprenda antes de agir</h1>
+          <p className="text-lg text-slate-500">Artigos práticos que se conectam diretamente com as suas jornadas de vida. Sem enrolação, direto ao ponto.</p>
+        </header>
 
-        {/* Category Filter */}
-        <section className="border-b border-slate-200 dark:border-slate-800 py-8">
-          <div className="container-safe">
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href="/blog"
-                className="inline-flex items-center rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                Todos os Artigos
-              </Link>
-              {categories.map((category) => (
-                <Link
-                  key={category}
-                  href={`/blog?category=${category}`}
-                  className="inline-flex items-center rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {mockArticles.map(article => {
+            const relatedJourney = mockJourneys.find(j => j.slug === article.journeySlug);
+            
+            return (
+              <div key={article.id} className="group card-hover flex flex-col p-8 h-full">
+                <div className="mb-6 flex justify-between items-start">
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                    Leitura: {article.readTime}
+                  </span>
+                  {relatedJourney && (
+                    <span className="inline-flex items-center text-xs font-medium text-primary">
+                      Jornada conectada <ArrowRight className="w-3 h-3 ml-1" />
+                    </span>
+                  )}
+                </div>
+                
+                <h3 className="text-2xl font-serif font-semibold mb-3 group-hover:text-primary transition-colors">
+                  {article.title}
+                </h3>
+                
+                <p className="text-slate-500 mb-8 flex-1">
+                  {article.resume}
+                </p>
 
-        {/* Articles Grid */}
-        <section className="py-16 sm:py-20">
-          <div className="container-safe">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
-                <Card
-                  key={article.slug}
-                  className="flex flex-col overflow-hidden hover:shadow-lg transition-all duration-200"
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <CardTitle className="text-lg line-clamp-2">
-                          {article.title}
-                        </CardTitle>
-                        <CardDescription className="mt-2 line-clamp-2">
-                          {article.description}
-                        </CardDescription>
+                {relatedJourney && (
+                  <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-3">Faz parte de:</p>
+                    <Link href={`/jornada/${relatedJourney.slug}`} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-indigo-50 dark:hover:bg-primary/10 transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center">
+                        <Compass className="w-5 h-5 text-primary" />
                       </div>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {article.category}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {article.readingTime} min de leitura
-                      </Badge>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="flex flex-1 flex-col justify-between">
-                    <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                      <Calendar className="h-3 w-3" />
-                      <span>{formatDate(article.publishedAt)}</span>
-                    </div>
-
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="mt-6 w-full"
-                    >
-                      <Link href={`/blog/${article.slug}`}>
-                        Ler Artigo
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <footer className="border-t border-slate-200 dark:border-slate-800">
-        <div className="container-safe py-8 text-center text-sm text-slate-600 dark:text-slate-400">
-          <p>&copy; 2024 Próximo Passo. Todos os direitos reservados.</p>
+                      <div>
+                        <p className="text-sm font-semibold">{relatedJourney.title}</p>
+                        <p className="text-xs text-slate-500">{relatedJourney.steps.length} passos</p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-      </footer>
+      </main>
     </div>
+  );
+}
+
+function Compass(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+    </svg>
   );
 }

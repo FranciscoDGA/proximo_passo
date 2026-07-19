@@ -1,101 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Menu, X, LogOut } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/providers/auth-provider";
-import { signOut } from "@/lib/auth";
+import { Search, User } from "lucide-react";
+import { mockUser } from "@/lib/mock-data";
 
 export function Navbar() {
-  const router = useRouter();
-  const { user, isLoading } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSigningOut, setIsSigningOut] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const handleSignOut = async () => {
-    setIsSigningOut(true);
-    try {
-      await signOut();
-      router.push("/");
-    } catch (error) {
-      console.error("Error signing out:", error);
-      setIsSigningOut(false);
-    }
-  };
-
   return (
-    <nav className="border-b border-slate-200 dark:border-slate-800">
-      <div className="container-safe flex items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="text-2xl font-bold text-primary">Próximo Passo</div>
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-md dark:border-slate-800/50 dark:bg-slate-950/80">
+      <div className="container-safe flex h-16 items-center justify-between">
+        <Link href="/" className="text-xl font-serif font-semibold tracking-tight text-slate-900 dark:text-white">
+          Próximo Passo
         </Link>
-
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-
-        <div className={`${isOpen ? "block" : "hidden"} absolute left-0 right-0 top-16 border-b border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950 md:static md:border-none md:bg-transparent md:p-0 dark:md:bg-transparent`}>
-          <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-            <Link
-              href="/journeys"
-              className="text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-blue-400"
-            >
-              Explorar Guias
-            </Link>
-            <Link
-              href="/blog"
-              className="text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-blue-400"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/pricing"
-              className="text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-blue-400"
-            >
-              Preços
-            </Link>
-            <div className="flex gap-2 pt-4 md:pt-0">
-              {isMounted && !isLoading && user ? (
-                <>
-                  <Button variant="ghost" asChild>
-                    <Link href="/dashboard">
-                      Dashboard
-                    </Link>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSignOut}
-                    disabled={isSigningOut}
-                    className="gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sair
-                  </Button>
-                </>
-              ) : isMounted && !isLoading ? (
-                <>
-                  <Button variant="ghost" asChild>
-                    <Link href="/signin">Entrar</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link href="/signup">Começar</Link>
-                  </Button>
-                </>
-              ) : null}
+        
+        <div className="hidden md:flex flex-1 items-center justify-center max-w-md mx-8">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Ex: Abrir empresa, Casar, Fui demitido..." 
+              className="w-full rounded-full border border-slate-200 bg-slate-100/50 py-2 pl-10 pr-4 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary dark:border-slate-800 dark:bg-slate-900"
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
+              <kbd className="hidden sm:inline-block rounded border border-slate-200 bg-slate-100 px-1.5 font-mono text-[10px] font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">⌘</kbd>
+              <kbd className="hidden sm:inline-block rounded border border-slate-200 bg-slate-100 px-1.5 font-mono text-[10px] font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">K</kbd>
             </div>
           </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Link href="/blog" className="hidden text-sm font-medium text-slate-600 hover:text-primary md:block dark:text-slate-400">
+            Blog
+          </Link>
+          <Link href="/ferramentas" className="hidden text-sm font-medium text-slate-600 hover:text-primary md:block dark:text-slate-400">
+            Ferramentas
+          </Link>
+          <Link href="/dashboard" className="flex items-center gap-2 rounded-full border border-slate-200 p-1 pr-4 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900">
+            <div className="h-8 w-8 rounded-full bg-slate-100 overflow-hidden">
+              <img src={mockUser.avatar} alt="Avatar" className="h-full w-full object-cover" />
+            </div>
+            <span className="text-sm font-medium">{mockUser.name.split(' ')[0]}</span>
+          </Link>
         </div>
       </div>
     </nav>

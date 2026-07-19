@@ -1,69 +1,29 @@
 "use client";
 
 import { Navbar } from "@/components/layout/navbar";
-import { Checklist } from "@/components/journeys/checklist";
-import { Chat } from "@/components/journeys/chat";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, FileText, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-
-interface JourneyData {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  type: string;
-  category: string;
-  stepsCount: number;
-  estimatedTime: string;
-  sections: {
-    overview: {
-      description: string;
-      benefits?: string[];
-    };
-    checklist: Array<{
-      id: number;
-      title: string;
-      description: string;
-    }>;
-    timeline?: Array<{
-      day: string;
-      title: string;
-      tasks: string[];
-    }>;
-    documents?: Array<{
-      name: string;
-      description: string;
-      url: string;
-    }>;
-    faqs?: Array<{
-      q: string;
-      a: string;
-    }>;
-    costs?: {
-      description?: string;
-      items: Array<{
-        item: string;
-        cost: string;
-      }>;
-    };
-  };
-}
+import { MockJourney, mockUser } from "@/lib/mock-data";
+import { useState } from "react";
 
 interface GenericJourneyProps {
-  journey: JourneyData;
+  journey: MockJourney;
 }
 
 export function GenericJourney({ journey }: GenericJourneyProps) {
-  const checklist = journey.sections.checklist.map((item) => ({
-    id: item.id,
-    title: item.title,
-    description: item.description,
-  }));
+  const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>({});
+  
+  const toggleStep = (id: string) => {
+    setCompletedSteps(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
 
-  const backLink = journey.type === "conquistar" ? "/conquistar" : "/resolver";
+  const progress = Math.round((Object.values(completedSteps).filter(Boolean).length / journey.steps.length) * 100);
+  const backLink = journey.category === "conquistar" ? "/conquistar" : "/resolver";
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
@@ -86,20 +46,20 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="max-w-2xl"
+                className="max-w-3xl"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <Badge variant="secondary" className="bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300">
-                    {journey.category}
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                  <Badge variant="secondary" className={`${journey.category === 'conquistar' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'}`}>
+                    {journey.category === 'conquistar' ? 'Conquista' : 'Resolução'}
                   </Badge>
-                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1">
+                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
                     <Clock className="h-3 w-3" /> {journey.estimatedTime}
                   </span>
-                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1">
-                    <CheckCircle2 className="h-3 w-3" /> {journey.stepsCount} etapas
+                  <span className="flex items-center text-xs font-medium text-slate-500 gap-1 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                    Complexidade: {journey.complexity}
                   </span>
                 </div>
-                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+                <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight text-slate-900 dark:text-white mb-4">
                   {journey.title}
                 </h1>
                 <p className="text-lg text-slate-600 dark:text-slate-400">
@@ -110,93 +70,121 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
           </div>
         </section>
 
-        {/* Unified Layout: Left Checklist, Right Chat/Sidebar */}
+        {/* Unified Layout: Left Timeline, Right Chat/Sidebar */}
         <section className="py-12">
           <div className="container-safe max-w-6xl mx-auto px-6">
             <div className="grid gap-12 lg:grid-cols-12 items-start">
               
-              {/* Left Column (Checklist and Content) */}
-              <div className="lg:col-span-7 xl:col-span-8 space-y-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <Checklist items={checklist} journeySlug={journey.slug} journeyId={journey.id} />
-                </motion.div>
-
-                {journey.sections.overview.benefits && (
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">O que você ganha ao terminar</h3>
-                    <ul className="grid gap-3 sm:grid-cols-2">
-                      {journey.sections.overview.benefits.map((benefit) => (
-                        <li key={benefit} className="flex items-start gap-3 p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/30">
-                          <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="text-slate-700 dark:text-slate-300 font-medium text-sm">
-                            {benefit}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              {/* Left Column (Timeline) */}
+              <div className="lg:col-span-7 xl:col-span-8 space-y-8">
                 
-                {journey.sections.documents && (
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Modelos e Documentos</h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      {journey.sections.documents.map((doc) => (
-                        <a href={doc.url} key={doc.name} className="group block p-5 rounded-2xl border border-slate-200 bg-white hover:border-primary/40 hover:shadow-sm transition-all dark:bg-slate-900 dark:border-slate-800">
-                          <FileText className="h-8 w-8 text-slate-400 group-hover:text-primary mb-3 transition-colors" />
-                          <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{doc.name}</h4>
-                          <p className="text-xs text-slate-500">{doc.description}</p>
-                        </a>
-                      ))}
+                <div className="card p-8 mb-8 border-primary/20 bg-indigo-50/50 dark:bg-primary/5 dark:border-primary/10">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-primary mb-2 flex items-center">
+                    <Target className="w-4 h-4 mr-2" /> Objetivo Final
+                  </h3>
+                  <p className="text-xl font-serif font-medium">{journey.objective}</p>
+                  
+                  <div className="mt-8">
+                    <div className="flex justify-between text-sm font-medium mb-2">
+                      <span>Progresso da Jornada</span>
+                      <span className="text-primary">{progress}%</span>
+                    </div>
+                    <div className="w-full h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <motion.div 
+                        className="h-full bg-primary"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.5 }}
+                      />
                     </div>
                   </div>
-                )}
+                </div>
+
+                <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 space-y-12 pb-8">
+                  {journey.steps.map((step, index) => {
+                    const isCompleted = completedSteps[step.id];
+                    return (
+                      <div key={step.id} className="relative pl-8">
+                        {/* Timeline dot */}
+                        <div className={`absolute -left-[11px] top-1 h-5 w-5 rounded-full border-2 bg-white dark:bg-slate-950 transition-colors duration-300 flex items-center justify-center ${isCompleted ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300 dark:border-slate-600'}`}>
+                          {isCompleted && <CheckCircle2 className="w-3 h-3 text-white" />}
+                        </div>
+                        
+                        <div 
+                          className={`card p-6 transition-all duration-300 cursor-pointer ${isCompleted ? 'opacity-60 bg-slate-50 dark:bg-slate-900/50' : 'hover:border-primary/30 hover:shadow-md'}`}
+                          onClick={() => toggleStep(step.id)}
+                        >
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Passo {index + 1}</span>
+                            <button className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${isCompleted ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 text-transparent hover:border-primary'}`}>
+                              <CheckCircle2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                          <h3 className={`text-xl font-semibold mb-2 ${isCompleted ? 'line-through text-slate-500' : ''}`}>
+                            {step.title}
+                          </h3>
+                          <p className="text-slate-500">{step.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Right Column (Sidebar/Chat) */}
+              {/* Right Column (Mock AI Chat) */}
               <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
                 
-                {/* AI Assistant Chat */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="shadow-xl shadow-primary/5 rounded-2xl overflow-hidden"
-                >
-                  <Chat journeyId={journey.id} journeyTitle={journey.title} />
-                </motion.div>
-
-                {/* Costs Breakdown */}
-                {journey.sections.costs && (
-                  <Card className="shadow-none border-slate-200 dark:border-slate-800">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-base">Custos Estimados</CardTitle>
-                      {journey.sections.costs.description && (
-                        <CardDescription className="text-xs">
-                          {journey.sections.costs.description}
-                        </CardDescription>
-                      )}
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3">
-                        {journey.sections.costs.items.map((item) => (
-                          <div key={item.item} className="flex justify-between items-center text-sm border-b border-slate-100 dark:border-slate-800 pb-2 last:border-0 last:pb-0">
-                            <span className="text-slate-600 dark:text-slate-400">
-                              {item.item}
-                            </span>
-                            <span className="font-medium text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
-                              {item.cost}
-                            </span>
-                          </div>
-                        ))}
+                <div className="card overflow-hidden p-0 flex flex-col h-[600px] border-primary/10 shadow-xl shadow-primary/5">
+                  <div className="p-4 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-primary" />
                       </div>
-                    </CardContent>
-                  </Card>
-                )}
+                      <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900"></div>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{journey.specialistName}</h3>
+                      <p className="text-xs text-slate-500">{journey.specialistRole}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/30 dark:bg-slate-950/30">
+                    <div className="flex gap-3">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
+                        <Sparkles className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 text-sm shadow-sm">
+                        Olá {mockUser.name.split(' ')[0]}! Sou {journey.specialistName}, seu guia nesta jornada de {journey.title}. Como posso te ajudar agora?
+                      </div>
+                    </div>
+                    
+                    {progress > 0 && (
+                      <div className="flex gap-3">
+                        <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-primary/20 flex items-center justify-center shrink-0">
+                          <Sparkles className="w-4 h-4 text-primary" />
+                        </div>
+                        <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-700 text-sm shadow-sm">
+                          Excelente progresso! Já completamos {progress}% do nosso objetivo. Quer uma ajuda para resolver a próxima etapa?
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        placeholder="Pergunte ao especialista..." 
+                        className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-4 pr-12 text-sm outline-none focus:border-primary dark:border-slate-700 dark:bg-slate-800"
+                        disabled
+                      />
+                      <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white" disabled>
+                        <Send className="w-4 h-4 ml-0.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
               
             </div>

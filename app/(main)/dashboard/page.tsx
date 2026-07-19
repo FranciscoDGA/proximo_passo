@@ -1,255 +1,104 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Navbar } from '@/components/layout/navbar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { useAuth } from '@/providers/auth-provider';
-import { getUserJourneys } from '@/lib/journeys-persistence';
-import { getJourneysAction } from '@/app/actions/journeys';
+import { motion } from "framer-motion";
+import { mockUser, mockJourneys } from "@/lib/mock-data";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, Clock, PlayCircle } from "lucide-react";
+import { Navbar } from "@/components/layout/navbar"; // I'll create this right after
 
-interface UserJourney {
-  id: string;
-  user_id: string;
-  journey_id: string;
-  progress: number;
-  checklist_data: Record<string, boolean>;
-  saved_at: string;
-}
-
-export default function DashboardPage() {
-  const router = useRouter();
-  const { user, isLoading: authLoading } = useAuth();
-  const [userJourneys, setUserJourneys] = useState<UserJourney[]>([]);
-  const [allJourneys, setAllJourneys] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (authLoading) return;
-
-    if (!user) {
-      router.push('/signin');
-      return;
-    }
-
-    const fetchData = async () => {
-      try {
-        const [userJourneysData, allJourneysData] = await Promise.all([
-          getUserJourneys(user.id),
-          getJourneysAction(),
-        ]);
-        setUserJourneys(userJourneysData);
-        setAllJourneys(allJourneysData);
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Erro ao carregar jornadas');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [user, authLoading, router]);
-
-  if (authLoading || isLoading) {
-    return (
-      <div className="flex min-h-screen flex-col">
-        <Navbar />
-        <div className="flex-1 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      </div>
-    );
-  }
-
-  const suggestedJourneys = allJourneys
-    .filter((j) => !userJourneys.some((uj) => uj.journey_id === j.id))
-    .slice(0, 2);
-
-  const myJourneys = userJourneys
-    .map((uj) => {
-      const journey = allJourneys.find((j) => j.id === uj.journey_id);
-      if (!journey) return null;
-
-      return {
-        ...journey,
-        progress: Math.round((uj.progress || 0) * 100),
-        lastAccessed: new Date(uj.saved_at).toLocaleDateString('pt-BR'),
-      };
-    })
-    .filter(Boolean);
-
-  const totalJourneys = myJourneys.length;
-  const avgProgress = totalJourneys > 0 ? Math.round(myJourneys.reduce((sum, j) => sum + j.progress, 0) / totalJourneys) : 0;
+export default function Dashboard() {
+  const active = mockJourneys.filter(j => mockUser.activeJourneys.includes(j.slug));
+  const completed = mockJourneys.filter(j => mockUser.completedJourneys.includes(j.slug));
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
-      <div className="flex-1 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
-        <div className="container-safe py-12">
-          <div className="mb-12">
-            <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-              Bem-vindo, {user?.user_metadata?.name || 'Usuário'}!
-            </h1>
-            <p className="mt-2 text-slate-600 dark:text-slate-300">
-              Acompanhe seu progresso em cada jornada
-            </p>
+      <main className="flex-1 container-safe py-12">
+        <header className="mb-10">
+          <h1 className="text-3xl font-serif font-semibold">Minha Jornada</h1>
+          <p className="text-slate-500">Bem-vindo de volta, {mockUser.name.split(' ')[0]}. Veja seu progresso.</p>
+        </header>
+
+        <div className="grid md:grid-cols-12 gap-8">
+          {/* Main Content - Active Journeys */}
+          <div className="md:col-span-8 space-y-8">
+            <section>
+              <h2 className="text-xl font-semibold mb-4 flex items-center">
+                <PlayCircle className="w-5 h-5 mr-2 text-primary" /> Em Andamento
+              </h2>
+              <div className="space-y-4">
+                {active.map(j => (
+                  <Link href={`/jornada/${j.slug}`} key={j.id} className="block group">
+                    <div className="card-hover flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                      <div className="mb-4 sm:mb-0">
+                        <span className={`inline-block px-2 py-1 rounded text-xs font-medium mb-2 ${j.category === 'conquistar' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'}`}>
+                          {j.category === 'conquistar' ? 'Conquista' : 'Resolução'}
+                        </span>
+                        <h3 className="text-lg font-semibold">{j.title}</h3>
+                        <p className="text-sm text-slate-500 mt-1">Próximo passo: {j.steps[0].title}</p>
+                      </div>
+                      
+                      <div className="flex items-center gap-6">
+                        <div className="text-right hidden sm:block">
+                          <p className="text-sm font-medium">10%</p>
+                          <div className="w-24 h-2 bg-slate-100 dark:bg-slate-800 rounded-full mt-1 overflow-hidden">
+                            <div className="h-full bg-primary rounded-full" style={{ width: '10%' }}></div>
+                          </div>
+                        </div>
+                        <div className="h-10 w-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-400">
+                <CheckCircle2 className="w-5 h-5 mr-2" /> Concluídas
+              </h2>
+              <div className="space-y-4 opacity-75">
+                {completed.map(j => (
+                  <div key={j.id} className="card p-6 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-500">{j.title}</h3>
+                      <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-1 flex items-center">
+                        <CheckCircle2 className="w-4 h-4 mr-1" /> Jornada arquivada
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
 
-          {error && (
-            <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-200">
-              {error}
+          {/* Sidebar */}
+          <div className="md:col-span-4 space-y-6">
+            <div className="card bg-indigo-50 border-none dark:bg-indigo-950/30 p-6">
+              <h3 className="font-semibold text-indigo-900 dark:text-indigo-300 mb-2">Plano Atual</h3>
+              <p className="text-3xl font-serif text-indigo-900 dark:text-white mb-4">{mockUser.plan}</p>
+              <button className="w-full btn-primary bg-indigo-600 hover:bg-indigo-700">Gerenciar Plano</button>
             </div>
-          )}
-
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-6">
-              {/* Minhas Jornadas */}
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-                  Minhas Jornadas ({totalJourneys})
-                </h2>
-
-                {myJourneys.length > 0 ? (
-                  <div className="space-y-4">
-                    {myJourneys.map((journey) => (
-                      <Card key={journey.id} className="hover:shadow-lg transition-all">
-                        <CardContent className="p-6">
-                          <div className="space-y-4">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                  {journey.title}
-                                </h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                                  Acessado {journey.lastAccessed}
-                                </p>
-                              </div>
-                              <Badge variant="secondary">
-                                {journey.progress}% Completo
-                              </Badge>
-                            </div>
-
-                            <div className="space-y-2">
-                              <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-                                <div
-                                  className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300"
-                                  style={{ width: `${journey.progress}%` }}
-                                />
-                              </div>
-                            </div>
-
-                            <Link
-                              href={`/journeys/${journey.slug}`}
-                              className="inline-flex items-center text-primary font-medium hover:underline"
-                            >
-                              Continuar <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+            
+            <div className="card p-6">
+              <h3 className="font-semibold mb-4">Alertas Pendentes</h3>
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <Clock className="w-5 h-5 text-amber-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium">Prazo de ITBI vencendo</p>
+                    <p className="text-xs text-slate-500">Comprar Imóvel • Faltam 2 dias</p>
                   </div>
-                ) : (
-                  <Card>
-                    <CardContent className="p-6 text-center">
-                      <p className="text-slate-600 dark:text-slate-300">
-                        Você ainda não iniciou nenhuma jornada. Comece a explorar!
-                      </p>
-                      <Button asChild className="mt-4">
-                        <Link href="/journeys">Explorar Jornadas</Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-
-              {/* Sugestões */}
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-                  Explore Mais Jornadas
-                </h2>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {suggestedJourneys.map((journey) => (
-                    <Card key={journey.id} className="hover:shadow-lg transition-all">
-                      <CardHeader>
-                        <CardTitle>{journey.title}</CardTitle>
-                        <CardDescription>{journey.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Button asChild variant="outline" className="w-full">
-                          <Link href={`/journeys/${journey.slug}`}>
-                            Explorar
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
                 </div>
               </div>
             </div>
-
-            {/* Sidebar */}
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Estatísticas</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                        Jornadas Iniciadas
-                      </span>
-                      <span className="text-2xl font-bold text-primary">{totalJourneys}</span>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-slate-200 dark:border-slate-800 pt-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                        Progresso Médio
-                      </span>
-                      <span className="text-2xl font-bold text-secondary">{avgProgress}%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-primary to-secondary text-white">
-                <CardHeader>
-                  <CardTitle className="text-lg">Upgrade Premium</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm opacity-90 mb-4">
-                    Desbloqueie jornadas ilimitadas e especialista IA
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="w-full text-primary hover:text-primary"
-                    asChild
-                  >
-                    <Link href="/pricing">Ver Planos</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
           </div>
-        </div>
-      </div>
 
-      <footer className="border-t border-slate-200 dark:border-slate-800">
-        <div className="container-safe py-8 text-center text-sm text-slate-600 dark:text-slate-400">
-          <p>&copy; 2024 Próximo Passo. Todos os direitos reservados.</p>
         </div>
-      </footer>
+      </main>
     </div>
   );
 }

@@ -2,18 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, AlertCircle, Scale, TrendingDown } from "lucide-react";
-import journeys from "@/data/journeys.json";
-
-// Helper to map icon names to Lucide components
-const iconMap: Record<string, any> = {
-  "alert-circle": AlertCircle,
-  scale: Scale,
-  "trending-down": TrendingDown,
-};
+import { ArrowLeft, ArrowRight, ShieldAlert } from "lucide-react";
+import { mockJourneys } from "@/lib/mock-data";
 
 export default function ResolverPage() {
-  const resolverJourneys = journeys.filter((j) => j.type === "resolver");
+  const resolverJourneys = mockJourneys.filter((j) => j.category === "resolver");
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950 selection:bg-red-500/30">
@@ -32,7 +25,7 @@ export default function ResolverPage() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-serif font-bold tracking-tight text-slate-900 dark:text-white mb-4">
             O que você precisa resolver?
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400">
@@ -42,8 +35,6 @@ export default function ResolverPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {resolverJourneys.map((journey, i) => {
-            const Icon = iconMap[journey.icon] || AlertCircle;
-            
             return (
               <motion.div
                 key={journey.id}
@@ -54,8 +45,8 @@ export default function ResolverPage() {
                 <Link href={`/jornada/${journey.slug}`} className="block h-full group">
                   <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-red-500/40 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-red-500/40">
                     <div>
-                      <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 group-hover:bg-red-500/10 group-hover:text-red-500 transition-colors">
-                        <Icon className="h-5 w-5" />
+                      <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-slate-800 dark:text-slate-300 group-hover:bg-amber-100 group-hover:text-amber-600 transition-colors">
+                        <ShieldAlert className="h-5 w-5" />
                       </div>
                       <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                         {journey.title}
@@ -69,14 +60,14 @@ export default function ResolverPage() {
                       <div className="flex items-center gap-3 text-xs font-medium text-slate-500 dark:text-slate-400">
                         <span className="flex items-center gap-1">
                           <span className="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></span>
-                          {journey.stepsCount} etapas
+                          {journey.steps.length} etapas
                         </span>
                         <span className="flex items-center gap-1">
                           <span className="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></span>
                           {journey.estimatedTime}
                         </span>
                       </div>
-                      <ArrowRight className="h-4 w-4 text-slate-400 opacity-0 transition-all group-hover:opacity-100 group-hover:text-red-500 group-hover:translate-x-1" />
+                      <ArrowRight className="h-4 w-4 text-slate-400 opacity-0 transition-all group-hover:opacity-100 group-hover:text-amber-500 group-hover:translate-x-1" />
                     </div>
                   </div>
                 </Link>
