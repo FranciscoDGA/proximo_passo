@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as {
 
 // @ts-ignore
 export const db = new Proxy({} as PrismaClient, {
-  get(target, prop) {
+  get(_, prop) {
     if (!globalForPrisma.prisma) {
       globalForPrisma.prisma = new PrismaClient({
         log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
