@@ -31,6 +31,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
   // Integração com Vercel AI SDK
   // @ts-ignore
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    // @ts-ignore
     api: "/api/chat",
     body: {
       userJourneyId: journey.id, // Em prod, seria o id do UserJourney do BD
