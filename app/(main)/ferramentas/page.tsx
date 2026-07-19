@@ -3,7 +3,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { mockTools, mockJourneys } from "@/lib/mock-data";
 import { Calculator, ListTodo, Calendar, ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 export default function Tools() {
   const getIcon = (category: string) => {
