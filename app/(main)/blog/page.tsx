@@ -3,7 +3,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { mockArticles, mockJourneys } from "@/lib/mock-data";
 import Link from "next/link";
-import { ArrowRight, Clock, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 
 export default function Blog() {
   return (
