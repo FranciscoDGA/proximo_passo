@@ -35,6 +35,7 @@ model Journey {
   faqItems         FAQItem[]
   glossaryTerms    GlossaryTerm[]
   geoPages         JourneyGeoPage[]
+  diagnosticQuestions DiagnosticQuestion[]
 }
 
 model Stage {
@@ -235,6 +236,7 @@ model User {
   email            String   @unique
   name             String
   role             String   @default("USER") // "USER" | "ADMIN" | "EDITOR"
+  lifeState        String   @default("ONBOARDING") // "CONSTRUCAO", "CRISE", "TRANSIÇAO", etc
   createdAt        DateTime @default(now())
 
   userJourneys     UserJourney[]
@@ -404,4 +406,34 @@ model PartnerProfessional {
   stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
   
   @@index([stageId])
+}
+
+// ---------------------------------------------------------------------------
+// DIAGNOSTIC ENGINE (LIFE NAVIGATOR)
+// ---------------------------------------------------------------------------
+
+model DiagnosticQuestion {
+  id             String   @id @default(uuid())
+  journeyId      String
+  order          Int
+  text           String
+  description    String?
+  type           String   // "SINGLE_CHOICE" | "MULTIPLE_CHOICE" | "TEXT"
+  
+  journey        Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  options        DiagnosticOption[]
+
+  @@index([journeyId])
+}
+
+model DiagnosticOption {
+  id             String   @id @default(uuid())
+  questionId     String
+  label          String
+  value          String
+  impactRules    Json?    // Ex: {"urgency": "+1", "financialImpact": "HIGH"}
+  
+  question       DiagnosticQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  
+  @@index([questionId])
 }

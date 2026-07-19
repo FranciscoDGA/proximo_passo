@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, AlertTriangle, ArrowRight, TrendingUp, Download } from "lucide-react";
+import { CheckCircle2, AlertTriangle, ArrowRight, TrendingUp, Download } from "lucide-react";
 import Link from "next/link";
 import { mockUser } from "@/lib/mock-data";
 
