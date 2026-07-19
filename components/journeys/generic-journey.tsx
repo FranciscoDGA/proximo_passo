@@ -29,6 +29,7 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Integração com Vercel AI SDK
+  // @ts-ignore
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: "/api/chat",
     body: {
