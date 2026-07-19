@@ -34,6 +34,7 @@ export async function POST(req: Request) {
         parameters: z.object({
           taskId: z.string().describe('O ID da tarefa que foi concluída, conforme exibido no contexto.'),
         }),
+        // @ts-ignore
         execute: async ({ taskId }) => {
           try {
             await JourneyEngine.completeTask(userJourneyId, taskId);

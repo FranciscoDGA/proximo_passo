@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/layout/navbar";
-import { mockUser, mockJourneys } from "@/lib/mock-data";
+import { mockUser } from "@/lib/mock-data";
 import { Settings, Shield, Award, Map, CreditCard, ChevronRight } from "lucide-react";
 
 export default function Perfil() {
