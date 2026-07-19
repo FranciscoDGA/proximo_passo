@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/layout/navbar";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ArrowRight, ShieldCheck, Star } from "lucide-react";
+import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ShieldCheck, Star } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MockJourney, mockUser } from "@/lib/mock-data";
