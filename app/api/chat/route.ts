@@ -46,7 +46,6 @@ export async function POST(req: Request) {
       }),
       // Ferramentas futuras (ex: upload_document) podem ser injetadas aqui
     },
-    maxSteps: 2, // Permite que a IA chame a ferramenta e depois gere uma resposta de texto de volta
     onFinish: async ({ text, toolCalls, toolResults }) => {
       // 3. Persistência de Memória no Prisma (Opcional para análise futura)
       try {
