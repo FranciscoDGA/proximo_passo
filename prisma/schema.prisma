@@ -29,6 +29,12 @@ model Journey {
   stages           Stage[]
   specialists      JourneySpecialist[]
   userJourneys     UserJourney[]
+  
+  // Relações Editoriais / SEO
+  articles         Article[]
+  faqItems         FAQItem[]
+  glossaryTerms    GlossaryTerm[]
+  geoPages         JourneyGeoPage[]
 }
 
 model Stage {
@@ -154,6 +160,70 @@ model Rule {
   action         String
   createdAt      DateTime @default(now())
 }
+
+// ---------------------------------------------------------------------------
+// EDITORIAL & SEO PROGRAMMATIC ECOSYSTEM
+// ---------------------------------------------------------------------------
+
+model Article {
+  id             String   @id @default(uuid())
+  slug           String   @unique
+  title          String
+  summary        String
+  content        String
+  published      Boolean  @default(false)
+  journeyId      String?
+  stageId        String?
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  journey        Journey? @relation(fields: [journeyId], references: [id])
+}
+
+model FAQItem {
+  id             String   @id @default(uuid())
+  question       String
+  answer         String
+  journeyId      String
+  stageId        String?
+  
+  journey        Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+}
+
+model GlossaryTerm {
+  id             String   @id @default(uuid())
+  slug           String   @unique
+  term           String
+  definition     String
+  journeyId      String?
+  
+  journey        Journey? @relation(fields: [journeyId], references: [id])
+}
+
+model GeoRegion {
+  id             String   @id @default(uuid())
+  slug           String   @unique
+  name           String
+  type           String   // "STATE" | "CITY"
+  
+  journeyGeoPages JourneyGeoPage[]
+}
+
+model JourneyGeoPage {
+  id             String   @id @default(uuid())
+  journeyId      String
+  geoRegionId    String
+  customTitle    String?
+  customContent  String?
+
+  journey        Journey    @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  geoRegion      GeoRegion  @relation(fields: [geoRegionId], references: [id], onDelete: Cascade)
+
+  @@unique([journeyId, geoRegionId])
+}
+
 
 // ---------------------------------------------------------------------------
 // USER STATE: JOURNEY PROGRESSION
