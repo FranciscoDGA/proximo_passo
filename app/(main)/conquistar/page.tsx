@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Briefcase, Home as HomeIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase } from "lucide-react";
 import { mockJourneys } from "@/lib/mock-data";
 
 export default function ConquistarPage() {
