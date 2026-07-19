@@ -5,7 +5,7 @@
   "description": "Próximo Passo: Seu guia para os momentos mais importantes da vida",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
