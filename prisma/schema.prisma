@@ -54,6 +54,7 @@ model Stage {
   tools          ToolReference[]
   articles       ArticleReference[]
   userStages     UserStage[]
+  partners       PartnerProfessional[]
 
   @@index([journeyId])
 }
@@ -230,13 +231,16 @@ model JourneyGeoPage {
 // ---------------------------------------------------------------------------
 
 model User {
-  id             String   @id @default(uuid())
-  email          String   @unique
-  name           String
-  plan           String   @default("FREE")
-  createdAt      DateTime @default(now())
+  id               String   @id @default(uuid())
+  email            String   @unique
+  name             String
+  role             String   @default("USER") // "USER" | "ADMIN" | "EDITOR"
+  createdAt        DateTime @default(now())
 
-  userJourneys   UserJourney[]
+  userJourneys     UserJourney[]
+  subscription     Subscription?
+  tools            UserTool[]
+  notifications    Notification[]
 }
 
 model UserJourney {
@@ -341,4 +345,63 @@ model AIMessage {
   session        AIChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   
   @@index([sessionId])
+}
+
+// ---------------------------------------------------------------------------
+// SAAS, BILLING & HUB OF PROFESSIONALS
+// ---------------------------------------------------------------------------
+
+model Subscription {
+  id                   String   @id @default(uuid())
+  userId               String   @unique
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?  @unique
+  planType             String   // "FREE" | "PREMIUM" | "FAMILY" | "ENTERPRISE"
+  status               String   // "ACTIVE" | "CANCELED" | "PAST_DUE"
+  currentPeriodEnd     DateTime?
+  
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserTool {
+  id             String   @id @default(uuid())
+  userId         String
+  toolId         String   // External or internal Tool identifier
+  favorite       Boolean  @default(false)
+  lastUsedAt     DateTime @default(now())
+  
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, toolId])
+}
+
+model Notification {
+  id             String   @id @default(uuid())
+  userId         String
+  title          String
+  message        String
+  type           String   // "REMINDER" | "ALERT" | "SYSTEM" | "PAYMENT"
+  read           Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  actionUrl      String?
+
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PartnerProfessional {
+  id             String   @id @default(uuid())
+  stageId        String
+  name           String
+  profession     String   // "Advogado" | "Contador" | "Psicólogo" | etc
+  registration   String?  // CRM, OAB, etc
+  rating         Float    @default(5.0)
+  reviewsCount   Int      @default(0)
+  avatarUrl      String?
+  contactUrl     String
+  isVerified     Boolean  @default(true)
+  subscription   String   // "BASIC" | "SPONSORED"
+
+  stage          Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  
+  @@index([stageId])
 }

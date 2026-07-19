@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/layout/navbar";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ArrowRight } from "lucide-react";
+import { CheckCircle2, Clock, ArrowLeft, Send, Sparkles, Target, ArrowRight, ShieldCheck, Star } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MockJourney, mockUser } from "@/lib/mock-data";
@@ -150,6 +150,39 @@ export function GenericJourney({ journey }: GenericJourneyProps) {
                       </div>
                     );
                   })}
+                </div>
+
+                {/* Hub de Profissionais (SaaS Lead Gen) */}
+                <div className="card mt-12 p-6 md:p-8 bg-white dark:bg-slate-900 border-indigo-100 dark:border-indigo-900/30">
+                  <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold mb-2">
+                    <ShieldCheck className="w-5 h-5" />
+                    Hub de Profissionais Verificados
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Precisa de ajuda especializada?</h3>
+                  <p className="text-slate-600 dark:text-slate-400 mb-6">
+                    Esta jornada exige o acompanhamento de um profissional qualificado. Conheça nossos parceiros homologados.
+                  </p>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {[
+                      { name: "Dr. Carlos Eduardo", role: "Advogado Especialista", rating: 4.9, reviews: 124 },
+                      { name: "Dra. Marina Silva", role: "Especialista em Direito de Família", rating: 5.0, reviews: 89 }
+                    ].map((prof, i) => (
+                      <div key={i} className="flex items-center p-4 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-indigo-500/50 transition-colors cursor-pointer group">
+                        <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden mr-4">
+                          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${prof.name}`} alt={prof.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-slate-900 dark:text-white text-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{prof.name}</h4>
+                          <p className="text-xs text-slate-500">{prof.role}</p>
+                          <div className="flex items-center gap-1 mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">
+                            <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                            {prof.rating} <span className="text-slate-400 font-normal">({prof.reviews} avaliações)</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 

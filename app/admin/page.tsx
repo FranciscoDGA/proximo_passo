@@ -1,156 +1,93 @@
-import { Metadata } from 'next';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Compass, BookOpen, MessageSquare, TrendingUp } from 'lucide-react';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Dashboard Admin | Próximo Passo',
-};
+import { motion } from "framer-motion";
+import { Users, DollarSign, Activity, CreditCard, ArrowUpRight } from "lucide-react";
 
-export const dynamic = 'force-dynamic';
-
-export default function AdminDashboard() {
-  // Mock data - replace with real database queries
+export default function AdminDashboardPage() {
   const stats = [
-    {
-      label: 'Total de Usuários',
-      value: '1,234',
-      icon: Users,
-      color: 'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
-    },
-    {
-      label: 'Jornadas',
-      value: '5',
-      icon: Compass,
-      color: 'bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400',
-    },
-    {
-      label: 'Artigos',
-      value: '47',
-      icon: BookOpen,
-      color: 'bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400',
-    },
-    {
-      label: 'Especialistas IA',
-      value: '5',
-      icon: MessageSquare,
-      color: 'bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400',
-    },
+    { name: "Usuários Ativos", value: "12,450", change: "+14%", icon: Users },
+    { name: "MRR (Receita)", value: "R$ 45.200", change: "+23%", icon: DollarSign },
+    { name: "Profissionais no Hub", value: "142", change: "+5%", icon: Activity },
+    { name: "Assinaturas Premium", value: "850", change: "+12%", icon: CreditCard },
   ];
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Dashboard Admin</h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-2">
-          Bem-vindo ao painel de administração. Aqui você gerencia conteúdo e visualiza analytics.
-        </p>
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Visão Geral</h1>
+          <p className="text-slate-400">Métricas de performance da plataforma Próximo Passo.</p>
+        </div>
+        <button className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+          Exportar Relatório
+        </button>
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => {
+        {stats.map((stat, i) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.label}>
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <CardTitle className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    {stat.label}
-                  </CardTitle>
-                  <div className={`p-2 rounded-lg ${stat.color}`}>
-                    <Icon className="h-4 w-4" />
-                  </div>
+            <motion.div 
+              key={stat.name}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-slate-900 border border-slate-800 rounded-xl p-6 relative overflow-hidden"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-rose-500" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {stat.value}
-                </div>
-              </CardContent>
-            </Card>
+                <span className="flex items-center text-emerald-500 text-xs font-semibold bg-emerald-500/10 px-2 py-1 rounded">
+                  {stat.change} <ArrowUpRight className="w-3 h-3 ml-1" />
+                </span>
+              </div>
+              <h3 className="text-slate-400 text-sm font-medium mb-1">{stat.name}</h3>
+              <p className="text-3xl font-bold text-white">{stat.value}</p>
+            </motion.div>
           );
         })}
       </div>
 
-      {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Users */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Usuários Recentes</CardTitle>
-            <CardDescription>Últimos usuários cadastrados</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 last:border-b-0">
-                  <div>
-                    <p className="font-medium text-slate-900 dark:text-white">Usuário {i}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">user{i}@email.com</p>
-                  </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Há {i} dias</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Most Used Journeys */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Jornadas Mais Usadas</CardTitle>
-            <CardDescription>Histórico de acessos</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[
-                { name: 'Abrir MEI', users: 342 },
-                { name: 'Comprar Casa', users: 285 },
-                { name: 'Inventário', users: 156 },
-              ].map((journey) => (
-                <div key={journey.name} className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 last:border-b-0">
-                  <p className="font-medium text-slate-900 dark:text-white">{journey.name}</p>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">
-                      {journey.users}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Ações Rápidas</CardTitle>
-          <CardDescription>Gerencia rápida dos principais recursos</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: 'Nova Jornada', href: '/admin/journeys/new' },
-              { label: 'Novo Artigo', href: '/admin/articles/new' },
-              { label: 'Gerenciar Especialistas', href: '/admin/specialists' },
-              { label: 'Ver Analytics', href: '/admin/analytics' },
-            ].map((action) => (
-              <a
-                key={action.label}
-                href={action.href}
-                className="p-4 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-center"
-              >
-                <p className="text-sm font-medium text-slate-900 dark:text-white">
-                  {action.label}
-                </p>
-              </a>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <h3 className="text-white font-semibold mb-6">Receita (Últimos 6 Meses)</h3>
+          <div className="h-64 flex items-end justify-between gap-2">
+            {[40, 55, 45, 70, 85, 100].map((h, i) => (
+              <div key={i} className="w-full bg-slate-800 rounded-t-sm relative group">
+                <div 
+                  className="absolute bottom-0 left-0 right-0 bg-rose-500 rounded-t-sm transition-all group-hover:bg-rose-400"
+                  style={{ height: `${h}%` }}
+                ></div>
+              </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex justify-between mt-4 text-xs text-slate-500">
+            <span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span>
+          </div>
+        </div>
+
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <h3 className="text-white font-semibold mb-6">Últimos Profissionais Cadastrados (Hub)</h3>
+          <div className="space-y-4">
+            {[
+              { name: "Dra. Carolina Silva", role: "Advogada de Família", status: "Aprovado" },
+              { name: "João Pedro Costa", role: "Contador Tributário", status: "Pendente" },
+              { name: "Mariana Alves", role: "Corretora de Imóveis", status: "Aprovado" },
+            ].map((prof, i) => (
+              <div key={i} className="flex items-center justify-between border-b border-slate-800 pb-4 last:border-0 last:pb-0">
+                <div>
+                  <p className="text-sm font-medium text-white">{prof.name}</p>
+                  <p className="text-xs text-slate-500">{prof.role}</p>
+                </div>
+                <span className={`text-xs px-2 py-1 rounded font-medium ${prof.status === 'Aprovado' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'}`}>
+                  {prof.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
